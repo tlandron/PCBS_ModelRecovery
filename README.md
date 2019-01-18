@@ -416,3 +416,15 @@ Plot of significant t-tests as a function of the difference in value for each pa
     finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 2, betaonly_diff_index,     ...
                              beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
                              'probability of reversal')
+                             
+ADD PLOT AND CLL
+
+## Files of interest
+(different files uploaded, with different number of sim)
+
+## Conclusion
+Ccl of the model recovery
+
+What this project has brought to me:
+- starting (almost) from scrath MATLAB language
+- a first hand-on on the data I'll be using for the long internship during the second semester
