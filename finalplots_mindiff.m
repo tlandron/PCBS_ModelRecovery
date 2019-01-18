@@ -1,10 +1,25 @@
 function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim, f_param_diff_index, ...
                              f_param_diffsigni_acrossdiff, f_strparam, f_strparam_short, f_strparam_cte)
-
+% Plot the number of significant ttests according to the difference tested
+% Input:  'f_dout'                        folder for data (dout)
+%         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
+%         'f_nsim'                        number of simulations (nsim)
+%         'f_nttest'                      number of ttests (nttest)
+%         'f_ndiff'                       differences to be tested (ndiff)
+%         'f_ndiffdim'                    1 for prev, 2 for beta
+%         'f_param_diff_index'            index of the revelant difference for each ...
+%                                         parameter (prev/beta_diff_index)
+%         'f_param_diffsigni_acrossdiff'  results of ttests for the two parameters for all ...
+%                                         differences to be tested (prev/beta_diffsigni_acrossdiff)
+%         'f_strparam'                    full name of the parameter ...
+%                                         ('probability of reversal' or 'choice variability')        
+%         'f_strparam_short'              shortened name of the parameter ('prev' or 'beta')
+%         'f_strparam_cte'                constant parameter ('beta' or 'prev')
+% Output: two figures saved (one for each parameter)
 
     f_formatSpec_title = ['Significant t-tests as a function of the difference tested for %s ', 10, ...
-                        '(%s constant, for %d t-tests on %d sim each, %d subjects)'];
-    f_formatSpec_fig = '%s%s_diffsigni_acrossdiff_%dsubj_%dx%dsim';
+                        '(%s constant, for %d t-tests on %d sim each, %d subjects)']; % ',10,' for new line
+    f_formatSpec_fig = '%sfig_%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s';
 
    
     f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:,:,:,f_param_diff_index); % to only select the differences for either prev or beta
@@ -23,9 +38,10 @@ function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f
         title(name_title);
         plot(x,y,'o-','LineWidth',2)
         ylabel('Percentage of significant t-tests');
+        xlabel('Difference tested')
         hold off
 
-        name_fig = sprintf(f_formatSpec_fig, f_dout,f_strparam_short,f_nsubjsubset(revindexsubset),f_nttest,f_nsim,'.png');
+        name_fig = sprintf(f_formatSpec_fig, f_dout,f_strparam_short,length(f_param_diff_index),f_nsubjsubset(revindexsubset),f_nttest,f_nsim,'.png');
         saveas(h, name_fig);   
     end
 end
