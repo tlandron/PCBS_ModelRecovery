@@ -60,7 +60,7 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
 
 
 
-## Part 1: Study of the mean and variance difference between the recovered values and the reference "fix" values of the parameters.
+## [Part 1: Study of the mean and variance difference between the recovered values and the reference "fix" values of the parameters](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL.mlx)
 
 Load the data.
     
@@ -252,7 +252,7 @@ ADD FINALS PLOTS AND CCL
  
  
  
-## Part 2 : Study of the minimal difference discriminated by the fitting procedure
+## [Part 2 : Study of the minimal difference discriminated by the fitting procedure](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL(mindiff).mlx)
 
 Load the data.
 
