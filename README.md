@@ -1,7 +1,7 @@
 # Programming for Cognitive and Brain Sciences: Development of model and parameter recovery procedures for the study of reversal learning
 ## Validating project for PCBS course (Cogmaster, 2018-2019).
 
-The background for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
+The context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
 
 ## Given scripts
 - for loading the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots.m),
