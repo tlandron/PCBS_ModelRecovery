@@ -4,18 +4,17 @@
 The background for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
 
 ## Given scripts
-- the [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots.m) for loading the data,
+- for loading the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots.m),
     - ROLE OF THE SCRIPT, main variable out = dat;
-- the [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m),
+- simulation procedure [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m),
     - ROLE OF THE SCRIPT, main variable out = cfg ? ;
-- the [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m),
+- fit procedure [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m),
     - ROLE OF THE SCRIPT, main variable out = prev, beta.
 
 ## Initial fits
 A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/initialfit.m), in order to obtain a reference value for each variable of interest (prev_fit, beta_fit) was a adapted from the [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m) as a function that runs for 'nrep' repetitions of the fitting procedure using the actual dataset.
 
-    '
-
+   
     function [outf_prev_fit, outf_beta_fit] = initialfit(f_nrep, f_nsubj, f_dat, f_subjlist)
     % Run 'nrep' repetitions of the fit procedure.
     % Input:  'f_nrep'      the number of repetitions
@@ -33,7 +32,6 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
 
         for irep = 1:f_nrep
             for isubj = 1:f_nsubj
-                %isubj
                 for itask = 1:2
 
                     % filter trials of interest
@@ -58,8 +56,6 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
             end
         end
     end
-
-    '
 
 
  
