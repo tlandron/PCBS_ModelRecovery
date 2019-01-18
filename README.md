@@ -166,7 +166,7 @@ Variables to plot histograms & histograms of the recovered parameters (if figure
     %     hold off
 
 
-           Variables to plot histograms & histograms of the difference between the recovered-fixed parameters (if figures wanted, uncomment; CAUTION: variables stored across subsets needed for final saving & final plots).
+Variables to plot histograms & histograms of the difference between the recovered-fixed parameters (if figures wanted, uncomment; CAUTION: variables stored across subsets needed for final saving & final plots).
 
         prev_diff = prev_recov - prev_fix;
         beta_diff = beta_recov - beta_fix;
