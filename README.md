@@ -423,8 +423,8 @@ Plot of significant t-tests as a function of the difference in value for each pa
                              beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
                              'probability of reversal')
 
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_diffsigni_acrossdiff_24subj_100x30sim.png)
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_diffsigni_acrossdiff_24subj_100x30sim.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_prev_diffsigni_across7diff_24subj_100x30sim.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_beta_diffsigni_across7diff_24subj_100x30sim.png)
 
 The plots suggest that the fit procedure is able to acknowledge a difference of 0.05 in the probablity of reversal in more than 90% of the cases, and a difference of 0.3 in the choice variability (100%).
 
