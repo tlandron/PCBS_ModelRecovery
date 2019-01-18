@@ -445,7 +445,7 @@ Plot of significant t-tests as a function of the difference in value for each pa
     % Output: two figures saved (one for each parameter)
 
         f_formatSpec_title = ['Significant t-tests as a function of the difference tested for %s ', 10, ...
-                            '(%s constant, for %d t-tests on %d sim each, %d subjects)'];
+                            '(%s constant, for %d t-tests on %d sim each, %d subjects)']; % ',10,' for new line
         f_formatSpec_fig = '%sfig_%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s';
 
 
