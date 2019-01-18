@@ -4,7 +4,7 @@
 The context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
 
 ## Given scripts
-- for loading the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots.m),
+- for loading the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/loaddata.m),
     - ROLE OF THE SCRIPT, main variable out = dat;
 - simulation procedure [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m),
     - ROLE OF THE SCRIPT, main variable out = cfg ? ;
@@ -423,7 +423,7 @@ Plot of significant t-tests as a function of the difference in value for each pa
                              beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
                              'probability of reversal')
 
-### Final plots (within part 2)
+### [Final plots (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
 
     function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim, f_param_diff_index, ...
                                  f_param_diffsigni_acrossdiff, f_strparam, f_strparam_short, f_strparam_cte)
