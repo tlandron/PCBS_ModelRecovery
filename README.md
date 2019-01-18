@@ -57,6 +57,9 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
         end
     end
 
+
+
+
 ## Part 1: Study of the mean and variance difference between the recovered values and the reference "fix" values of the parameters.
 
 Load the data.
@@ -246,16 +249,19 @@ Histograms of the paramterer according the number of subject they were estimated
 
 ADD FINALS PLOTS AND CCL
  
+ 
+ 
+ 
 ## Part 2 : Study of the minimal difference discriminated by the fitting procedure
 
-Load the data (given script).
+Load the data.
 
     loaddata
 
     dout = '../Out/' % folder for produced data
     
 
-Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal (prev) and the choice variability (beta), that will serve fixed refence values to the next analyses.
+Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal (prev) and the choice variability (beta), that serves as fix reference values to the next analyses.
 
     nrep = 10;
 
@@ -420,10 +426,11 @@ Plot of significant t-tests as a function of the difference in value for each pa
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_diffsigni_acrossdiff_24subj_100x30sim.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_diffsigni_acrossdiff_24subj_100x30sim.png)
 
-ADD PLOT AND CLL
+The plots suggest that the fit procedure is able to acknowledge a difference of 0.05 in the probablity of reversal in more than 90% of the cases, and a difference of 0.3 in the choice variability (100%).
+
 
 ## Files of interest
-(different files uploaded, with different number of sim)
+(different files uploaded, with different number of sims)
 
 ## Conclusion
 Ccl of the model recovery
