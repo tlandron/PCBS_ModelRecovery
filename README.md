@@ -57,7 +57,7 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
         end
     end
 
-##Part 1: Study of the mean and variance difference between the recovered values and the reference "fix" values of the parameters.
+## Part 1: Study of the mean and variance difference between the recovered values and the reference "fix" values of the parameters.
 
 Loading of the data
     
@@ -174,7 +174,7 @@ Histogram of the recovered parameters and their difference from the fix one.
         prev_diff_cattask = squeeze(cat(3, prev_diff(:, 1, :), prev_diff(:,2,:)))';
         beta_diff_cattask = squeeze(cat(3, beta_diff(:, 1, :), beta_diff(:,2,:)))';
 
-                Parameters for each stimulation (average across subjects) is stored outside the loop.
+Parameters for each stimulation (average across subjects) is stored outside the loop.
 
         prev_diff_subjave(:,revindexsubset) = mean(prev_diff_cattask, 2);
         beta_diff_subjave(:,revindexsubset) = mean(beta_diff_cattask, 2);
@@ -191,13 +191,16 @@ Histogram of the recovered parameters and their difference from the fix one.
         hist(beta_diff_subjave(:,revindexsubset));
         hold off
         
-           Mean & variance of the distribution of recovered parameters across simulations for each subset of participants
+Mean & variance of the distribution of recovered parameters across simulations for each subset of participants
+
         meansd_prev_diff_subjave(revindexsubset,1) = mean(prev_diff_subjave(:,revindexsubset));
         meansd_prev_diff_subjave(revindexsubset,2) = std(prev_diff_subjave(:,revindexsubset));
 
         meansd_beta_diff_subjave(revindexsubset,1) = mean(beta_diff_subjave(:,revindexsubset));
         meansd_beta_diff_subjave(revindexsubset,2) = std(beta_diff_subjave(:,revindexsubset));
-            Correlation between the two parameters between subject is computed for each simulation.  
+
+Correlation between the two parameters between subject is computed for each simulation.  
+        
         prev_recov_cattask = squeeze(cat(3,prev_recov(:,1,:),prev_recov(:,2,:)));
         beta_recov_cattask = squeeze(cat(3,beta_recov(:,1,:),beta_recov(:,2,:)));
 
@@ -211,7 +214,8 @@ Histogram of the recovered parameters and their difference from the fix one.
 
     end
 
-    Saving data of interest
+Saving data of interest
+
     dout = '../Out/' % folder for produced data
 
     str_nsubjsubset = '';
@@ -230,7 +234,8 @@ Histogram of the recovered parameters and their difference from the fix one.
     save(name_file, 'nsim','beta_fix','beta_recov_subjave','beta_diff_subjave',    ...
                     'meansd_beta_diff_subjave','mean_corr_prev_beta','shared_var')
 
-    Histogram of the paramterer according the number of subject they were estimated from (n = 12, 24, 48 or 96).
+Histogram of the paramterer according the number of subject they were estimated from (n = 12, 24, 48 or 96).
+    
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                prev_diff_subjave, 'probability of reversal', 'prev')
 
