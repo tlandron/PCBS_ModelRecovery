@@ -15,7 +15,7 @@ The context for this recovery procedure can be in found [here](https://github.co
 A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/initialfit.m), in order to obtain a reference value for each variable of interest (prev_fit, beta_fit) was a adapted from the [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m) as a function that runs for 'nrep' repetitions of the fitting procedure using the actual dataset.
 
 
-   function [outf_prev_fit, outf_beta_fit] = initialfit(f_nrep, f_nsubj, f_dat, f_subjlist)
+    function [outf_prev_fit, outf_beta_fit] = initialfit(f_nrep, f_nsubj, f_dat, f_subjlist)
     % Run 'nrep' repetitions of the fit procedure.
     % Input:  'f_nrep'      the number of repetitions
     %         'f_nsubj'     the number of subject (integer output from loaddata.m)
