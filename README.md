@@ -251,12 +251,22 @@ Histograms of the paramterer according the number of subject they were estimated
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                               nbins, beta_diff_subjave, 'choice variability', 'beta')
                       
-"Homemade R-style" scatterplots displaying the correlation coeffcients or the shared variance between prev and beta for each subset.
+"Homemade R-style" scatterplots displaying the mean and the variance for each subset, for each parameter.
 
-    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
+    f_formatSpec_title = 'Mean %s (2x%d simulations)';
+    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
+                               meansd_prev_diff_subjave(:,1), 'probability of reversal', 'mean_prev', 'Probability of reversal')
+
+    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
+                               meansd_beta_diff_subjave(:,1), 'choice variability', 'mean_beta', 'Choice variability')
+                          
+"Homemade R-style" scatterplots displaying the correlation coeffcient or the shared variance between prev and beta for each subset.
+
+    f_formatSpec_title = '%s between the probability of reversal and choice variability (2x%d simulations)';
+    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
                                mean_corr_prev_beta, 'Correlation coefficients', 'corr', 'r')
 
-    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
+    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title,...
                                shared_var, 'Shared variance', 'sharedvar', 'R^2')
 
 ### [Final plots: plotted histograms (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
@@ -342,26 +352,26 @@ Histograms of the paramterer according the number of subject they were estimated
 
     end
 
-### [Final plots: correlation coefficients and shared variance (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_corrshvar.m)
+### [Final plots: "home-made R-style" scatterplots (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_hmscatter.m)
 
-    function finalplots_corrshvar(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
-                                          f_toplot, f_strtoplot, f_strtoplot_short, f_ylabel)
-        % Plot the resulting correlation coefficients or shared variance values between the probability ...
-        %       of reversal and choice variability for each subject subset.
+    function finalplots_hmscatter(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file,    ...
+                                          f_formatSpec_title, f_toplot, f_strtoplot, f_strtoplot_short, f_ylabel)
+        % Plot the an scatterplot of f_toplot (mean probability of reversal/mean choice variability or    ...
+        %      correlation coefficients or shared variance values between probability of reversal and     ...
+        %      choice variability) for each subject subset.
         % Input:  'f_dout'                        folder for data (dout)
         %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
         %         'f_nsim'                        number of simulations (nsim)
         %         'f_str_nsubjsubset'             string version of nsubjsubset (str_nsubjsubset)
-        %         'f_formatSpec_file'             string format for saved figure (formatSpec_file)
-        %         'f_toplot'                      variable to be plotted (either corr or sharedvar)
+        %         'f_formatSpec_file'             saved figure string format (formatSpec_file)
+        %         'f_formatSpec_title'            title string format (formatSpec_title)
+        %         'f_toplot'                      variable to be plotted (e.g., corr or sharedvar)
         %         'f_strtoplot'                   string full name of the variable to be plotted ...
-        %                                         ('Correlation coefficients' or 'Shared variance')
+        %                                         (e.g., 'Correlation coefficients' or 'Shared variance')
         %         'f_strtoplot_short'             string short name of the variable to be plotted ...
-        %                                         ('corr' or 'sharedvar')     
-        %         'f_ylabel'                      math name corr: 'r', sharedvar: 'R^2')
+        %                                         (e.g., 'corr' or 'sharedvar')     
+        %         'f_ylabel'                      y label (e.g, math name for corr: 'r', sharedvar: 'R^2')
         % Output: one figure saved (for either prev or beta)
-
-        f_formatSpec_title = '%s between the probability of reversal and choice variability (2x%d simulations)';
 
         lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
         for irevindexsubset = 1:length(f_nsubjsubset)
@@ -402,13 +412,17 @@ Histograms of the paramterer according the number of subject they were estimated
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
 
-The plots shows a slight surestimation of the recovered values (e.g., around + ...  for the probability of reversal and around + ... for choice variability, both for 24 subjects). Unsurprisingly, the more subjects, the smaller the variance). 
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_mean_prev_2x5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_mean_beta_2x5000sim_12-24-48-96subj.png)
+
+
+The plots shows a slight surestimation of the recovered values (e.g., around + 0.0050  for the probability of reversal and around + 0.0526 for choice variability, both for 24 subjects). Unsurprisingly, the more subjects, the smaller the variance. 
 
 
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_corr_2x5000sim_12-24-48-96subj.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_sharedvar_2x5000sim_12-24-48-96subj.png)
 
-The two parameter shares around 0.12 of variance, whatever the subject subset size. 
+The two parameter shares between 12-13% of variance, whatever the subject subset size. 
 
  
  
