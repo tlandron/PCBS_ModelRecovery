@@ -258,7 +258,7 @@ Histograms of the paramterer according the number of subject they were estimated
     finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                                shared_var, 'Shared variance', 'sharedvar', 'R^2')
 
-### [Final plots: plotted histograms (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
+### [Final plots: plotted histograms (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
 
     function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
                                      f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
@@ -300,7 +300,7 @@ Histograms of the paramterer according the number of subject they were estimated
         legend(lgd);
         hold off
 
-        name_fig = sprintf(f_formatSpec_file, f_dout, ['Fig_diff_', f_strparam_short, '_recov-fix'], ...
+        name_fig = sprintf(f_formatSpec_file, f_dout, ['fig_diff_', f_strparam_short, '_recov-fix'], ...
                                               f_nsim, f_str_nsubjsubset, '.png');
         saveas(h, name_fig) 
 
@@ -335,13 +335,13 @@ Histograms of the paramterer according the number of subject they were estimated
         legend(lgd);
         hold off
 
-        name_fig = sprintf(f_formatSpec_file, f_dout, ['Fig_pdf_diff_', f_strparam_short, '_recov-fix'], ...
+        name_fig = sprintf(f_formatSpec_file, f_dout, ['fig_pdf_diff_', f_strparam_short, '_recov-fix'], ...
                                               f_nsim, f_str_nsubjsubset, '.png');
         saveas(h, name_fig)
 
     end
 
-### [Final plots: correlation coefficients and shared variance (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_corrshvar.m)
+### [Final plots: correlation coefficients and shared variance (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_corrshvar.m)
 
     function finalplots_corrshvar(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
                                           f_toplot, f_strtoplot, f_strtoplot_short, f_ylabel)
@@ -388,12 +388,22 @@ Histograms of the paramterer according the number of subject they were estimated
         hold off
 
 
-        name_fig = sprintf(f_formatSpec_file, f_dout, ['Fig_',f_strtoplot_short], ...
+        name_fig = sprintf(f_formatSpec_file, f_dout, ['fig_',f_strtoplot_short], ...
                                               f_nsim, f_str_nsubjsubset, '.png');
         saveas(h, name_fig)
     end
 
 
+
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_prev_recov-fix_5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_prev_recov-fix_5000sim_12-24-48-96subj.png)
+
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_beta_recov-fix_5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_beta_recov-fix_5000sim_12-24-48-96subj.png)
+
+
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_corr_5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_sharedvar_5000sim_12-24-48-96subj.png)
 
 ADD FINALS PLOTS AND CCL
  The 
