@@ -237,12 +237,14 @@ Saving data of interest
 
 
 Histograms of the paramterer according the number of subject they were estimated from (n = 12, 24, 48 or 96).
-    
-    finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
-                              prev_diff_subjave, 'probability of reversal', 'prev')
+
+    nbins = 100; % can be manually changed to the 'apparent noise' on the raw curves
 
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
-                              beta_diff_subjave, 'choice variability', 'beta')
+                              nbins, prev_diff_subjave, 'probability of reversal', 'prev')
+
+    finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
+                              nbins, beta_diff_subjave, 'choice variability', 'beta')
 
 
 ### [Final plots (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
