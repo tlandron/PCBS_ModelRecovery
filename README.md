@@ -215,7 +215,7 @@ Correlation between the two parameters between subject is computed for each simu
     end
 
 
-Saving workspace
+Saving workspace (the link sends to the workspace used to make the figures) ADD LINK
     
     dout = '../Out/' % folder for produced data
 
@@ -250,7 +250,7 @@ Histograms of the paramterer according the number of subject they were estimated
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                               nbins, beta_diff_subjave, 'choice variability', 'beta')
                       
-"Homemade R-style" scatterplots displaying the coeffcient of regression or the shared variance between prev and beta for each subset.
+"Homemade R-style" scatterplots displaying the correlation coeffcients or the shared variance between prev and beta for each subset.
 
     finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                                mean_corr_prev_beta, 'Correlation coefficients', 'corr', 'r')
@@ -395,15 +395,15 @@ Histograms of the paramterer according the number of subject they were estimated
 
 
 
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_prev_recov-fix_5000sim_12-24-48-96subj.png)
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_prev_recov-fix_5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
 
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_beta_recov-fix_5000sim_12-24-48-96subj.png)
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_beta_recov-fix_5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
 
 
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_corr_5000sim_12-24-48-96subj.png)
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_sharedvar_5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_corr_2x5000sim_12-24-48-96subj.png)
+![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_sharedvar_2x5000sim_12-24-48-96subj.png)
 
 ADD FINALS PLOTS AND CCL
  The 
