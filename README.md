@@ -215,7 +215,8 @@ Correlation between the two parameters between subject is computed for each simu
     end
 
 
-Saving workspace (the link sends to the workspace used to make the figures) ADD LINK
+Saving workspace. 
+NB: As git only allow files < 25 Mb, the commented code was used ([prev_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_recov_2x5000sim_12-24-48-96subj.mat) & [beta_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_recov_2x5000sim_12-24-48-96subj.mat)).
     
     dout = '../Out/' % folder for produced data
 
@@ -401,13 +402,14 @@ Histograms of the paramterer according the number of subject they were estimated
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
 
+The plots shows a slight surestimation of the recovered values (e.g., around + ...  for the probability of reversal and around + ... for choice variability, both for 24 subjects). Unsurprisingly, the more subjects, the smaller the variance). 
+
 
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_corr_2x5000sim_12-24-48-96subj.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_sharedvar_2x5000sim_12-24-48-96subj.png)
 
-ADD FINALS PLOTS AND CCL
- The 
- 
+The two parameter shares around 0.12 of variance, whatever the subject subset size. 
+
  
  
 ## [Part 2 : Study of the minimal difference discriminated by the fitting procedure](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL(mindiff).mlx)
@@ -558,12 +560,12 @@ Paired-sample t-test + data saving for each given difference (ndiff)
         str_nsubjsubset = str_nsubjsubset(1:end-1) % to delete the last (useless) '-'
 
         formatSpec_file = '%s%s_(%g-%g)diff_%ssubj_%dx%dsim.mat';
+    
+        name_file = sprintf(formatSpec_file, dout,'prev_ttest',idiff(1),idiff(2),str_nsubjsubset,nttest,nsim);
+        save(name_file, 'dout', 'ndiff', 'idiff','nsubjsubset','nsim','nttest','prev_ttest','prev_diffsigni')
 
-        name_prev_ttest = sprintf(formatSpec_file, dout,'prev_ttest',idiff(1),idiff(2),str_nsubjsubset,nttest,nsim);
-        save(name_prev_ttest, 'idiff','nsubjsubset','nsim','nttest','prev_ttest','prev_diffsigni')
-
-        name_beta_ttest = sprintf(formatSpec_file, dout,'beta_ttest',idiff(1),idiff(2),str_nsubjsubset,nttest,nsim);
-        save(name_beta_ttest, 'idiff','nsubjsubset','nsim','nttest','beta_ttest','beta_diffsigni')
+        name_file = sprintf(formatSpec_file, dout,'beta_ttest',idiff(1),idiff(2),str_nsubjsubset,nttest,nsim);
+        save(name_file, 'dout', 'ndiff', 'idiff','nsubjsubset','nsim','nttest','beta_ttest','beta_diffsigni')
 
     end
 
@@ -580,6 +582,22 @@ Plot of significant t-tests as a function of the difference in value for each pa
     finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 2, betaonly_diff_index,     ...
                              beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
                              'probability of reversal')
+ 
+Final workscape saving ADD LINK TO SAVED WORKSPACE
+
+    formatSpec_file = '%s%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s'
+
+    name_file = sprintf(formatSpec_file, dout, 'all', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
+    save(name_file) % to save the whole workspace
+
+    % To save only the variables needed for plotting:
+    % name_file = sprintf(formatSpec_file, dout, 'prev', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
+    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim','nttest','prev_diffsigni_acrossdiff', 'prevonly_diff_index')
+    % 
+    % name_file = sprintf(formatSpec_file, dout, 'beta', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
+    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim','nttest','beta_diffsigni_acrossdiff', 'betaonly_diff_index')
+
+
                              
 ### [Final plots (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
 
@@ -637,9 +655,6 @@ Plot of significant t-tests as a function of the difference in value for each pa
 
 The plots suggest that the fit procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (100%).
 
-
-## Files of interest
-(different files uploaded, with different number of sims)
 
 ## Conclusion
 Ccl of the model recovery
