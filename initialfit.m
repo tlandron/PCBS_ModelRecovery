@@ -1,13 +1,21 @@
 
 function [outf_prev_fit, outf_beta_fit] = initialfit(f_nrep, f_nsubj, f_dat, f_subjlist)
-%     nrep = 1e1;
+    % Run 'nrep' repetitions of the fit procedure.
+    % Input:  'f_nrep'      the number of repetitions
+    %         'f_nsubj'     the number of subject (integer output from loaddata.m)
+    %         'f_dat'       the data (structure output from loaddata.m)
+    %         'f_subjlist'  the list of subjects (array output from loaddata.m)
+    % Output: 'outf_prev_fit outf_beta_fit' two 3D matrix,
+    %             One matrix/parameter, structured as follow: 'outf_param_fit(isubj,itask,irep)', 
+    %                 first dimension 'isubj' corresponds to each subject, 
+    %                 second dimension 'itask' corresponds to each task,
+    %                 third dimension 'irep' corresponds to each repetition.
 
     outf_prev_fit = zeros(f_nsubj,2,f_nrep);
     outf_beta_fit = zeros(f_nsubj,2,f_nrep);
 
     for irep = 1:f_nrep
         for isubj = 1:f_nsubj
-            %isubj
             for itask = 1:2
 
                 % filter trials of interest
