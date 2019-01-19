@@ -215,7 +215,7 @@ Correlation between the two parameters between subject is computed for each simu
     end
 
 
-Saving data of interest
+Saving workspace
     
     dout = '../Out/' % folder for produced data
 
@@ -227,41 +227,64 @@ Saving data of interest
 
     formatSpec_file = '%s%s_%dsim_%ssubj%s';
 
-    name_file = sprintf(formatSpec_file, dout,'prev_recov',nsim,str_nsubjsubset,'.mat');
-    save(name_file, 'nsim','prev_fix','prev_recov_subjave','prev_diff_subjave',    ...
-                    'meansd_prev_diff_subjave','mean_corr_prev_beta','shared_var')
-
-    name_file = sprintf(formatSpec_file, dout,'beta_recov',nsim,str_nsubjsubset,'.mat');
-    save(name_file, 'nsim','beta_fix','beta_recov_subjave','beta_diff_subjave',    ...
-                    'meansd_beta_diff_subjave','mean_corr_prev_beta','shared_var')
+    name_file = sprintf(formatSpec_file, dout, 'recov', nsim, str_nsubjsubset, '.mat');
+    save(name_file) % to save the whole workspace
+    
+    % Or use the following to save only specific variables:
+    % name_file = sprintf(formatSpec_file, dout, 'prev_recov', nsim, str_nsubjsubset, '.mat');
+    % save(name_file, 'nsim', 'nsubjsubset', 'prev_fix', 'prev_recov_subjave', 'prev_diff_subjave',    ...
+    %                 'meansd_prev_diff_subjave', 'mean_corr_prev_beta', 'shared_var')
+    % 
+    % name_file = sprintf(formatSpec_file, dout, 'beta_recov', nsim, str_nsubjsubset, '.mat');
+    % save(name_file, 'nsim', 'nsubjsubset', 'beta_fix', 'beta_recov_subjave', 'beta_diff_subjave',    ...
+    %                 'meansd_beta_diff_subjave', 'mean_corr_prev_beta', 'shared_var')
 
 
 Histograms of the paramterer according the number of subject they were estimated from (n = 12, 24, 48 or 96).
 
     nbins = 100; % can be manually changed to the 'apparent noise' on the raw curves
-
+            
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                               nbins, prev_diff_subjave, 'probability of reversal', 'prev')
 
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                               nbins, beta_diff_subjave, 'choice variability', 'beta')
+                      
+"Homemade R-style" scatterplots displaying the coeffcient of regression or the shared variance between prev and beta for each subset.
 
+    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
+                               mean_corr_prev_beta, 'Correlation coefficients', 'corr', 'r')
 
-### [Final plots (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
+    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
+                               shared_var, 'Shared variance', 'sharedvar', 'R^2')
+
+### [Final plots: plotted histograms (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
 
     function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
-                                         f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
+                                     f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
+        % Plot the histogram curves of the difference between the recovered and fixed value according to subject subsets 
+        %      for each parameter (prev & beta) as well as their normalised estimation.
+        % Input:  'f_dout'                        folder for data (dout)
+        %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
+        %         'f_nsim'                        number of simulations (nsim)
+        %         'f_str_nsubjsubset'             string version of nsubjsubset (str_nsubjsubset)
+        %         'f_formatSpec_file'             string format for saved figure ('formatSpec_file)
+        %         'f_nbins'                       number of bins for raw histogram ('nbins')
+        %         'f_param_diff_subjave'          parameter average across subject for each simulation ...
+        %                                         ('prev/beta_diff_subjave')
+        %         'f_strparam'                    full name of the parameter ...
+        %                                         ('probability of reversal' or 'choice variability')        
+        %         'f_strparam_short'              shortened name of the parameter ('prev' or 'beta')
+        % Output: two figures saved (one for each parameter)
 
 
-
-
-    f_formatSpec_title = '%sifference recovered-fixed %s (2x%d simulations)';
-    DOCSTRING
+        f_formatSpec_title = '%sifference recovered-fixed %s (2x%d simulations)';
 
         lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
         for irevindexsubset = 1:length(f_nsubjsubset)
            lgd{irevindexsubset}= sprintf('%d subjects',f_nsubjsubset(irevindexsubset));
         end
+
 
         h = figure; % y = number of stimulations
         hold on
@@ -277,8 +300,10 @@ Histograms of the paramterer according the number of subject they were estimated
         legend(lgd);
         hold off
 
-        name_fig = sprintf(f_formatSpec_file, f_dout,['Fig_diff_',f_strparam_short,'_recov-fix'],f_nsim,f_str_nsubjsubset,'.png');
+        name_fig = sprintf(f_formatSpec_file, f_dout, ['Fig_diff_', f_strparam_short, '_recov-fix'], ...
+                                              f_nsim, f_str_nsubjsubset, '.png');
         saveas(h, name_fig) 
+
 
 
         clear n y % to avoid dimension issue with just-used variables
@@ -310,14 +335,68 @@ Histograms of the paramterer according the number of subject they were estimated
         legend(lgd);
         hold off
 
-        name_fig = sprintf(f_formatSpec_file, f_dout,['Fig_pdf_diff_',f_strparam_short,'_recov-fix'],f_nsim,f_str_nsubjsubset,'.png');
+        name_fig = sprintf(f_formatSpec_file, f_dout, ['Fig_pdf_diff_', f_strparam_short, '_recov-fix'], ...
+                                              f_nsim, f_str_nsubjsubset, '.png');
         saveas(h, name_fig)
 
     end
 
+### [Final plots: correlation coefficients and shared variance (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_corrshvar.m)
+
+    function finalplots_corrshvar(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
+                                          f_toplot, f_strtoplot, f_strtoplot_short, f_ylabel)
+        % Plot the resulting correlation coefficients or shared variance values between the probability ...
+        %       of reversal and choice variability for each subject subset.
+        % Input:  'f_dout'                        folder for data (dout)
+        %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
+        %         'f_nsim'                        number of simulations (nsim)
+        %         'f_str_nsubjsubset'             string version of nsubjsubset (str_nsubjsubset)
+        %         'f_formatSpec_file'             string format for saved figure (formatSpec_file)
+        %         'f_toplot'                      variable to be plotted (either corr or sharedvar)
+        %         'f_strtoplot'                   string full name of the variable to be plotted ...
+        %                                         ('Correlation coefficients' or 'Shared variance')
+        %         'f_strtoplot_short'             string short name of the variable to be plotted ...
+        %                                         ('corr' or 'sharedvar')     
+        %         'f_ylabel'                      math name corr: 'r', sharedvar: 'R^2')
+        % Output: one figure saved (for either prev or beta)
+
+        f_formatSpec_title = '%s between the probability of reversal and choice variability (2x%d simulations)';
+
+        lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
+        for irevindexsubset = 1:length(f_nsubjsubset)
+           lgd{irevindexsubset}= sprintf('%d subjects',f_nsubjsubset(irevindexsubset));
+        end
+
+
+        h = figure;
+        hold on;
+        title(sprintf(f_formatSpec_title, f_strtoplot, f_nsim))
+
+        for i = 1:length(f_toplot)
+            scatter(0,f_toplot(i))
+        end
+
+        m = mean(f_toplot);
+        hline = refline([0 m]);
+        hline.Color = 'r';
+
+        ax1 = gca;                   % to get current axes
+        ax1.YAxis.Visible = 'on' ;   % to keep y-axis
+        ax1.XAxis.Visible = 'off';   % to remove x-axis
+        ylabel(f_ylabel);
+        legend(lgd)
+        hold off
+
+
+        name_fig = sprintf(f_formatSpec_file, f_dout, ['Fig_',f_strtoplot_short], ...
+                                              f_nsim, f_str_nsubjsubset, '.png');
+        saveas(h, name_fig)
+    end
+
+
 
 ADD FINALS PLOTS AND CCL
- 
+ The 
  
  
  
@@ -546,7 +625,7 @@ Plot of significant t-tests as a function of the difference in value for each pa
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_prev_diffsigni_across7diff_24subj_100x30sim.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_beta_diffsigni_across7diff_24subj_100x30sim.png)
 
-The plots suggest that the fit procedure is able to acknowledge a difference of 0.05 in the probablity of reversal in more than 90% of the cases, and a difference of 0.3 in the choice variability (100%).
+The plots suggest that the fit procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (100%).
 
 
 ## Files of interest
