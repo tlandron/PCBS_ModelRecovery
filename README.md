@@ -5,11 +5,12 @@ The context for this recovery procedure can be in found [here](https://github.co
 
 ## Given scripts
 - for loading the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/loaddata.m),
-    - ROLE OF THE SCRIPT, main variable out = dat;
+    - computes the reversal curves and the repetition  curves, for each subject and condition,
+    - also creates a massive data array 'dat' storing the data of all subjects and conditions;
 - simulation procedure [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m),
-    - ROLE OF THE SCRIPT, main variable out = cfg ? ;
+    - produces simulated datasets from actual data, stores them in data array 'cfg';
 - fit procedure [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m),
-    - ROLE OF THE SCRIPT, main variable out = prev, beta.
+    - given datasets 'cfg', compute the two parameter of interest: the probability of reversal 'prev' and choice variability 'beta' for each subject and condition.
 
 ## Initial fits
 A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/initialfit.m), in order to obtain a reference value for each variable of interest (prev_fit, beta_fit) was a adapted from the [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m) as a function that runs for 'nrep' repetitions of the fitting procedure using the actual dataset.
@@ -60,7 +61,7 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
 
 
 
-## [Part 1: Study of the mean and variance difference between the recovered values and the reference "fix" values of the parameters](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL.mlx)
+## [Part 1: Study of the difference between the recovered values and the reference parameter values](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL.mlx)
 
 Load the data.
     
