@@ -204,12 +204,9 @@ Mean & variance of the distribution of recovered parameters across simulations f
 
 Correlation between the two parameters between subject is computed for each simulation.  
         
-        prev_recov_cattask = squeeze(cat(3,prev_recov(:,1,:),prev_recov(:,2,:))); % TO CORRECT!!!
-        beta_recov_cattask = squeeze(cat(3,beta_recov(:,1,:),beta_recov(:,2,:)));
-
         corr_prev_beta = zeros(2*nsim,1);
         for isim = 1:2*nsim
-            corr_prev_beta(isim) = corr(prev_recov_cattask(:,isim), beta_recov_cattask(:,isim));
+            corr_prev_beta(isim) = corr(prev_recov_cattask(isim,:)', beta_recov_cattask(isim,:)'); % transposed to use function 'corr'
         end
 
         mean_corr_prev_beta(revindexsubset) = mean(corr_prev_beta)
@@ -246,6 +243,75 @@ Histograms of the paramterer according the number of subject they were estimated
 
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                               beta_diff_subjave, 'choice variability', 'beta')
+
+
+### [Final plots (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
+
+    function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
+                                         f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
+
+
+
+
+    f_formatSpec_title = '%sifference recovered-fixed %s (2x%d simulations)';
+    DOCSTRING
+
+        lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
+        for irevindexsubset = 1:length(f_nsubjsubset)
+           lgd{irevindexsubset}= sprintf('%d subjects',f_nsubjsubset(irevindexsubset));
+        end
+
+        h = figure; % y = number of stimulations
+        hold on
+        name_title = sprintf(f_formatSpec_title, 'D', f_strparam, f_nsim);
+        title(name_title);
+
+        [n, x] = hist(f_param_diff_subjave,f_nbins);  
+        plot(x, n, 'LineWidth',2)
+
+        ylabel('Number of simulations');
+        xlabel(['Difference recovered-fixed, ',f_strparam]);
+        set(gca,'XGrid','on','YGrid','off')
+        legend(lgd);
+        hold off
+
+        name_fig = sprintf(f_formatSpec_file, f_dout,['Fig_diff_',f_strparam_short,'_recov-fix'],f_nsim,f_str_nsubjsubset,'.png');
+        saveas(h, name_fig) 
+
+
+        clear n y % to avoid dimension issue with just-used variables
+        h = figure; % with AUC = 1
+        hold on
+        name_title = sprintf(f_formatSpec_title, 'Probability density function of the d', f_strparam, f_nsim);
+        title(name_title);
+
+        nbins_pdf = length(f_param_diff_subjave);
+        [~, x_norm] = hist(f_param_diff_subjave,nbins_pdf);
+        y = zeros(nbins_pdf, length(f_nsubjsubset));
+        for irevindexsubset = 1:length(f_nsubjsubset)
+           pd = fitdist(f_param_diff_subjave(:,irevindexsubset), 'Normal');
+           y(:,irevindexsubset) = pdf(pd,x_norm);
+        end
+        plot(x_norm, y,'LineWidth',2)
+
+        set(gca,'ColorOrderIndex',1) % to reset the default color order
+        [n, x] = hist(f_param_diff_subjave,f_nbins);
+        empirical_pd = zeros(f_nbins, length(f_nsubjsubset));
+        for irevindexsubset = 1:length(f_nsubjsubset)
+           empirical_pd(:,irevindexsubset) = n(:,irevindexsubset)/trapz(x,n(:,irevindexsubset)); % so that AUC = 1
+        end
+        plot(x, empirical_pd,':','LineWidth',1)
+
+        ylabel('Probability density');
+        xlabel(['Difference recovered-fixed, ',f_strparam]);
+        set(gca,'XGrid','on','YGrid','off')
+        legend(lgd);
+        hold off
+
+        name_fig = sprintf(f_formatSpec_file, f_dout,['Fig_pdf_diff_',f_strparam_short,'_recov-fix'],f_nsim,f_str_nsubjsubset,'.png');
+        saveas(h, name_fig)
+
+    end
 
 
 ADD FINALS PLOTS AND CCL
@@ -414,16 +480,16 @@ Paired-sample t-test + data saving for each given difference (ndiff)
 
 Plot of significant t-tests as a function of the difference in value for each parameter (only works while the value of the other is kept constant)
     
-    prevonly_diff_index = [1 2 3 4 5 6 7]    ; % to enter manually according to the chosen 'ndiff'
+    prevonly_diff_index = [1 2 3 4 5 6 7]    ; % to enter manually according to respective index in 'ndiff'
     finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 1, prevonly_diff_index,     ...
                              prev_diffsigni_acrossdiff, 'probability of reversal', 'prev', ...
                              'choice variability')
 
-    betaonly_diff_index = [1 8 9 10 11 12 13]; % to enter manually according to the chosen 'ndiff'
+    betaonly_diff_index = [1 8 9 10 11 12 13]; % to enter manually according to respective index in 'ndiff'
     finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 2, betaonly_diff_index,     ...
                              beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
                              'probability of reversal')
-
+                             
 ### [Final plots (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
 
     function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim, f_param_diff_index, ...
