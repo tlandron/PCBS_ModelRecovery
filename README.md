@@ -68,15 +68,15 @@ Data loading.
     loaddata
 
 
-Inital fits (nrep number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal and the choice probability, that will serve fixed refence values to the next analyses (prev_fix, beta_fix).
+Inital fits (nrep number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal and the choice probability, that will serve fixed refence values to the next analyses (prev_fix, beta_fix). 
 
     nrep = 10;
 
     clear prev_fit beta_fit % to prevent any dimension error when using MATLAB LiveScript environment 
     [prev_fit, beta_fit] = initialfit(nrep, nsubj, dat, subjlist);
 
-    prev_fix = mean(prev_fit(:)) % same fixed value across the tasks
-    beta_fix = mean(beta_fit(:))
+    prev_fix = mean(prev_fit(:)) % same fixed value across the tasks     % prev_fix = 0.2087
+    beta_fix = mean(beta_fit(:))                                         % beta_fix = 1.2439
 
 
 In this first part, the two different task are not differentiated: the parameters are the same across the 2 tasks, resulting in 2x'nsim' simulated datasets.
@@ -131,8 +131,8 @@ In this first part, the two different task are not differentiated: the parameter
                     cfg_fit        = [];
                     cfg_fit.seqllr = out_sim.cfg.seqllr;
                     cfg_fit.seqind = out_sim.cfg.seqind;
-                    cfg_fit.raft   = out_sim.raft(:,isim);
-                    cfg_fit.rbef   = out_sim.rbef(:,isim);
+                    cfg_fit.raft   = out_sim.raft(:, isim);
+                    cfg_fit.rbef   = out_sim.rbef(:, isim);
                     cfg_fit.brep   = out_sim.cfg.brep; % force no repetition bias
                     cfg_fit.epsi   = out_sim.cfg.epsi; % force no lapses
 
@@ -164,7 +164,7 @@ Variables to plot histograms & histograms of the recovered parameters
     %     figure; 
     %     hold on
     %     title(["Probability of reversal (from n = ", num2str(isubjsubset), " subjects)"]);
-    %     hist(prev_recov_subjave(:,revindexsubset));
+    %     hist(prev_recov_subjave(:, revindexsubset));
     %     hold off
     %     
     %     figure;
@@ -227,7 +227,7 @@ NB: As git only allows files < 25 Mb, the commented code was used to split the v
 
     str_nsubjsubset = ''; % to nicely convert nsubjsubset into a string, e.g., "12-24-48-96"
     for isubjsubset = nsubjsubset
-        str_nsubjsubset = [str_nsubjsubset, num2str(isubjsubset),'-'];
+        str_nsubjsubset = [str_nsubjsubset, num2str(isubjsubset), '-'];
     end
     str_nsubjsubset = str_nsubjsubset(1:end-1) % to delete the last useless '-'
 
@@ -260,10 +260,10 @@ Histograms of the paramterers according the subject subset they were estimated f
 
     f_formatSpec_title = 'Mean %s (2x%d simulations)';
     finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
-                               meansd_prev_diff_subjave(:,1), 'probability of reversal', 'mean_prev', 'Probability of reversal')
+                               meansd_prev_diff_subjave(:, 1), 'probability of reversal', 'mean_prev', 'Probability of reversal')
 
     finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
-                               meansd_beta_diff_subjave(:,1), 'choice variability', 'mean_beta', 'Choice variability')
+                               meansd_beta_diff_subjave(:, 1), 'choice variability', 'mean_beta', 'Choice variability')
                           
 "Homemade R-style" scatterplots displaying the correlation coeffcient or the shared variance between prev and beta for each subset.
 
@@ -298,7 +298,7 @@ Histograms of the paramterers according the subject subset they were estimated f
 
         lgd = cell(length(f_nsubjsubset), 1); % to create an 'automatic' legend corresponding with each subset
         for irevindexsubset = 1:length(f_nsubjsubset)
-           lgd{irevindexsubset}= sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
+           lgd{irevindexsubset} = sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
         end
 
 
@@ -308,7 +308,7 @@ Histograms of the paramterers according the subject subset they were estimated f
         title(name_title);
 
         [n, x] = hist(f_param_diff_subjave, f_nbins);  
-        plot(x, n, 'LineWidth',2)
+        plot(x, n, 'LineWidth', 2)
 
         ylabel('Number of simulations');
         xlabel(['Difference recovered-fixed, ',f_strparam]);
@@ -332,7 +332,7 @@ Histograms of the paramterers according the subject subset they were estimated f
         [~, x_norm] = hist(f_param_diff_subjave, nbins_pdf);
         y = zeros(nbins_pdf, length(f_nsubjsubset));
         for irevindexsubset = 1:length(f_nsubjsubset)
-           pd = fitdist(f_param_diff_subjave(:,irevindexsubset), 'Normal');
+           pd = fitdist(f_param_diff_subjave(:, irevindexsubset), 'Normal');
            y(:, irevindexsubset) = pdf(pd, x_norm);
         end
         plot(x_norm, y, 'LineWidth', 2)
@@ -341,12 +341,12 @@ Histograms of the paramterers according the subject subset they were estimated f
         [n, x] = hist(f_param_diff_subjave, f_nbins);
         empirical_pd = zeros(f_nbins, length(f_nsubjsubset));
         for irevindexsubset = 1:length(f_nsubjsubset)
-           empirical_pd(:, irevindexsubset) = n(:, irevindexsubset)/trapz(x, n(:,irevindexsubset)); % so that AUC = 1
+           empirical_pd(:, irevindexsubset) = n(:, irevindexsubset)/trapz(x, n(:, irevindexsubset)); % so that AUC = 1
         end
         plot(x, empirical_pd, ':', 'LineWidth', 1)
 
         ylabel('Probability density');
-        xlabel(['Difference recovered-fixed, ',f_strparam]);
+        xlabel(['Difference recovered-fixed, ', f_strparam]);
         set(gca, 'XGrid', 'on', 'YGrid', 'off')
         legend(lgd);
         hold off
@@ -380,7 +380,7 @@ Histograms of the paramterers according the subject subset they were estimated f
 
         lgd = cell(length(f_nsubjsubset), 1); % to create an 'automatic' legend corresponding with each subset
         for irevindexsubset = 1:length(f_nsubjsubset)
-           lgd{irevindexsubset}= sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
+           lgd{irevindexsubset} = sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
         end
 
 
@@ -475,7 +475,7 @@ Using a function "sim_model_softmax", datasets are simulated using different val
 
     revindexdiff = 0
     for idiff = ndiff'
-        revindexdiff = revindexdiff+1; % to facilitate counting of the difference outside the loop
+        revindexdiff = revindexdiff + 1; % to facilitate counting of the difference outside the loop
 
         idiff % to display the difference being computed in MATLAB LiveScript environment 
         prev_fix = [mean_prev_fit-(idiff(1)/2) mean_prev_fit+(idiff(1)/2)]
@@ -545,14 +545,14 @@ Paired-sample t-test + data saving for each given difference (ndiff).
                 
                 revindexsubset = find(nsubjsubset==isubjsubset);    
 
-                [h,p,ci,stats] = ttest(prev_recov(1, 1, :),prev_recov(1, 2, :));
+                [h,p,ci,stats] = ttest(prev_recov(1, 1, :), prev_recov(1, 2, :));
                 prev_ttest(ittest, 1, revindexsubset) = h;
                 prev_ttest(ittest, 2, revindexsubset) = p;
                 prev_ttest(ittest, 3, revindexsubset) = ci(:, :, 1);
                 prev_ttest(ittest, 4, revindexsubset) = ci(:, :, 2);
                 prev_ttest(ittest, 5, revindexsubset) = stats.sd;
 
-                [h,p,ci,stats] = ttest(beta_recov(1,1,:),beta_recov(1,2,:));
+                [h,p,ci,stats] = ttest(beta_recov(1,1,:), beta_recov(1,2,:));
                 beta_ttest(ittest, 1, revindexsubset) = h;
                 beta_ttest(ittest, 2, revindexsubset) = p;
                 beta_ttest(ittest, 3, revindexsubset) = ci(:, :, 1);
@@ -644,7 +644,7 @@ Final workscape saving ADD LINK TO SAVED WORKSPACE.
 
         f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:, :, :, f_param_diff_index); % to only select the differences for either prev or beta
 
-        y = zeros(length(f_param_diff_index), 1); % preallocation
+        y = zeros(length(f_param_diff_index), 1); % preallocation of percentage of significant ttests
         for revindexsubset = 1:length(f_nsubjsubset) % loop to obtain the percentage of significant ttests
             for i = 1:length(f_param_diff_index)
                 div = f_paramonly_diffsigni_acrossdiff(:, :, revindexsubset, i);
@@ -676,8 +676,14 @@ Such values are much smaller than the difference within parameters observed betw
 
 
 ## Conclusion
-Ccl of the model recovery
+The model recovery shows that the fitting procedure is reliable. 
+The first part focused on the difference between a reference value for each of the two parameters of interest and their recovered values from 10 000 simulations, in four different-sized subsets (12, 24, 48 and 96 subjects). While the fitting procedure slightly overestimates both parameters, such overestimations only represent around 0.005/0.209 = 2% of the mean probability of reversal fixed value across the two tasks and 0.05/1.24 = 4% of the mean choice variability fixed value across the two tasks.
+The second part studied the sensitivity of the fitting procedure to discriminate a difference in the parameters values between the two tasks, in a subset of 24 subjects. The "threshold" found for each parameter only represents 0.05/..(difference prev between tasks).. = ... % of the difference in the probability of reversal between the two tasks in the actual data and 0.3/..(difference beta between tasks).. = ... % of the difference in choice variability between the two tasks in the actual data.
+
 
 What this project has brought to me:
-- starting (almost) from scrath MATLAB language
-- a first hand-on on the data I'll be using for the long internship during the second semester
+- I started almost from strach MATLAB language, I now have strong bases of it;
+- I got a first hand-on on the data I'll be using for the long internship during the second semester.
+
+How to improve the recovery procedure:
+- An easy way would be to increase the number of simulations, especially in the second part: more t-tests as well as more differences tested would sharpen the measure of sensitivity.
