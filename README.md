@@ -8,9 +8,9 @@ The context for this recovery procedure can be in found [here](https://github.co
     - computes the reversal curves and the repetition  curves, for each subject and condition,
     - also creates a massive data array 'dat' storing the data of all subjects and conditions;
 - simulation procedure [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m):
-    - produces simulated datasets from actual data, stores them in data array ('cfg');
+    - produces simulated datasets from actual data, stores them in data array (cfg);
 - fit procedure [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m):
-    - given datasets ('cfg'), computes the two parameters of interest: the probability of reversal ('prev') and choice variability ('beta') for each subject and condition.
+    - given datasets (cfg), computes the two parameters of interest: the probability of reversal (prev) and choice variability (beta) for each subject and condition.
 
 ## Initial fits
 A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/initialfit.m), in order to obtain a reference value fixed for each variable of interest (prev_fit, beta_fit) was a adapted from the [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m) as a function that runs for 'nrep' repetitions of the fitting procedure using the actual dataset.
@@ -28,8 +28,8 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
     %                 second dimension 'itask' corresponds to each task,
     %                 third dimension 'irep' corresponds to each repetition.
     
-        outf_prev_fit = zeros(f_nsubj,2,f_nrep);
-        outf_beta_fit = zeros(f_nsubj,2,f_nrep);
+        outf_prev_fit = zeros(f_nsubj, 2, f_nrep);
+        outf_beta_fit = zeros(f_nsubj, 2, f_nrep);
 
         for irep = 1:f_nrep
             for isubj = 1:f_nsubj
@@ -50,8 +50,8 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
                     out_fit = fit_model_softmax(cfg_fit);
 
                     % store model parameters
-                    outf_prev_fit(isubj,itask,irep) = out_fit.prev;
-                    outf_beta_fit(isubj,itask,irep) = out_fit.beta;
+                    outf_prev_fit(isubj, itask, irep) = out_fit.prev;
+                    outf_beta_fit(isubj, itask, irep) = out_fit.beta;
 
                 end
             end
@@ -68,7 +68,7 @@ Data loading.
     loaddata
 
 
-Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal and the choice probability, that will serve fixed refence values to the next analyses ('prev_fix', 'beta_fix').
+Inital fits (nrep number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal and the choice probability, that will serve fixed refence values to the next analyses (prev_fix, beta_fix).
 
     nrep = 10;
 
@@ -85,23 +85,23 @@ In this first part, the two different task are not differentiated: the parameter
     nsubjsubset       = [12 24 48 96] % subset(s) of participants (w/out consideration for condition, 96 = all)
 
     % preallocation, to save data across the subsets
-    prev_recov_subjave = zeros(2*nsim,length(nsubjsubset));
-    beta_recov_subjave = zeros(2*nsim,length(nsubjsubset));
+    prev_recov_subjave = zeros(2*nsim, length(nsubjsubset));
+    beta_recov_subjave = zeros(2*nsim, length(nsubjsubset));
 
-    prev_diff_subjave = zeros(2*nsim,length(nsubjsubset));
-    beta_diff_subjave = zeros(2*nsim,length(nsubjsubset));
+    prev_diff_subjave = zeros(2*nsim, length(nsubjsubset));
+    beta_diff_subjave = zeros(2*nsim, length(nsubjsubset));
 
-    meansd_prev_diff_subjave = zeros(length(nsubjsubset),2);
-    meansd_beta_diff_subjave = zeros(length(nsubjsubset),2);
+    meansd_prev_diff_subjave = zeros(length(nsubjsubset), 2);
+    meansd_beta_diff_subjave = zeros(length(nsubjsubset), 2);
 
-    mean_corr_prev_beta = zeros(length(nsubjsubset),1);
-    shared_var          = zeros(length(nsubjsubset),1);
+    mean_corr_prev_beta = zeros(length(nsubjsubset), 1);
+    shared_var          = zeros(length(nsubjsubset), 1);
 
 
     for isubjsubset = nsubjsubset % for each subset of subjects
 
-        prev_recov = zeros(isubjsubset,2,nsim); % to save data across subjects
-        beta_recov = zeros(isubjsubset,2,nsim);
+        prev_recov = zeros(isubjsubset, 2, nsim); % to save data across subjects
+        beta_recov = zeros(isubjsubset, 2, nsim);
 
         isubjsubset % to display the current subset running in MATLAB LiveScript environment 
         seq_isubjsubsest = randperm(nsubj,isubjsubset) % to avoid selecting deterministically the same subjects across subsets
@@ -142,10 +142,10 @@ In this first part, the two different task are not differentiated: the parameter
    Estimated values of prev and beta from each simulation are stored and their average value is computed.
 
                     % store model parameters
-                    revindexsubj = find(seq_isubjsubsest==isubj); % isubj goes over the index limit due to the 
+                    revindexsubj = find(seq_isubjsubsest == isubj); % isubj goes over the index limit due to the 
                                                                   % use of subsets --> reverse indexing
-                    prev_recov(revindexsubj,itask,isim) = out_recov.prev;
-                    beta_recov(revindexsubj,itask,isim) = out_recov.beta;
+                    prev_recov(revindexsubj, itask, isim) = out_recov.prev;
+                    beta_recov(revindexsubj, itask, isim) = out_recov.beta;
                 end    
             end
         end
@@ -153,24 +153,24 @@ In this first part, the two different task are not differentiated: the parameter
 Variables to plot histograms & histograms of the recovered parameters 
 (if figures wanted, uncomment;  CAUTION: variables stored across subsets needed for final saving).
 
-        prev_recov_cattask = squeeze(cat(3,prev_recov(:,1,:),prev_recov(:,2,:)))'; % concatenation of the data for the ...
-        beta_recov_cattask = squeeze(cat(3,beta_recov(:,1,:),beta_recov(:,2,:)))'; % two tasks into one array (as if one task)
+        prev_recov_cattask = squeeze(cat(3, prev_recov(:, 1, :), prev_recov(:, 2, :)))'; % concatenation of the data for the ...
+        beta_recov_cattask = squeeze(cat(3, beta_recov(:, 1, :), beta_recov(:, 2, :)))'; % two tasks into one array (as if one task)
                                                                                    % transposed matrix for dimension reason
-        revindexsubset = find(nsubjsubset==isubjsubset); 
-        prev_recov_subjave(:,revindexsubset) = mean(prev_recov_cattask,2);
-        beta_recov_subjave(:,revindexsubset) = mean(beta_recov_cattask,2);
+        revindexsubset = find(nsubjsubset == isubjsubset); 
+        prev_recov_subjave(:, revindexsubset) = mean(prev_recov_cattask, 2);
+        beta_recov_subjave(:, revindexsubset) = mean(beta_recov_cattask, 2);
 
     %     % figure to be played in MATLAB LiveScript environment, but not saved.
     %     figure; 
     %     hold on
-    %     title(["Probability of reversal (from n = ",num2str(isubjsubset)," subjects)"]);
+    %     title(["Probability of reversal (from n = ", num2str(isubjsubset), " subjects)"]);
     %     hist(prev_recov_subjave(:,revindexsubset));
     %     hold off
     %     
     %     figure;
     %     hold on
-    %     title(["Choice probability (from n = ",num2str(isubjsubset)," subjects)"]);
-    %     hist(beta_recov_subjave(:,revindexsubset));
+    %     title(["Choice probability (from n = ", num2str(isubjsubset), " subjects)"]);
+    %     hist(beta_recov_subjave(:, revindexsubset));
     %     hold off
 
 Variables to plot histograms & histograms of the difference between the recovered-fixed parameters 
@@ -179,38 +179,38 @@ Variables to plot histograms & histograms of the difference between the recovere
         prev_diff = prev_recov - prev_fix;
         beta_diff = beta_recov - beta_fix;
 
-        prev_diff_cattask = squeeze(cat(3, prev_diff(:, 1, :), prev_diff(:,2,:)))'; % concatenation of the data for the ...
-        beta_diff_cattask = squeeze(cat(3, beta_diff(:, 1, :), beta_diff(:,2,:)))'; % two tasks into one array (as if one task)
+        prev_diff_cattask = squeeze(cat(3, prev_diff(:, 1, :), prev_diff(:, 2, :)))'; % concatenation of the data for the ...
+        beta_diff_cattask = squeeze(cat(3, beta_diff(:, 1, :), beta_diff(:, 2, :)))'; % two tasks into one array (as if one task)
                                                                                     % transposed matrix for dimension reason
 
-        prev_diff_subjave(:,revindexsubset) = mean(prev_diff_cattask, 2);
-        beta_diff_subjave(:,revindexsubset) = mean(beta_diff_cattask, 2);
+        prev_diff_subjave(:, revindexsubset) = mean(prev_diff_cattask, 2);
+        beta_diff_subjave(:, revindexsubset) = mean(beta_diff_cattask, 2);
 
     %     figure;
     %     hold on
-    %     title(["Difference recovered-fixed probability of reversal (from n = ",num2str(isubjsubset)," subjects)"]);
-    %     hist(prev_diff_subjave(:,revindexsubset));
+    %     title(["Difference recovered-fixed probability of reversal (from n = ", num2str(isubjsubset), " subjects)"]);
+    %     hist(prev_diff_subjave(:, revindexsubset));
     %     hold off
     %     
     %     figure;
     %     hold on
-    %     title(["Difference recovered-fixed choice probability (from n = ",num2str(isubjsubset)," subjects)"]);
-    %     hist(beta_diff_subjave(:,revindexsubset));
+    %     title(["Difference recovered-fixed choice probability (from n = ", num2str(isubjsubset), " subjects)"]);
+    %     hist(beta_diff_subjave(:, revindexsubset));
     %     hold off
 
 Mean & variance of the distribution of the parameter difference recovered-fixed across simulations for each subset of subjects.
         
-        meansd_prev_diff_subjave(revindexsubset,1) = mean(prev_diff_subjave(:,revindexsubset));
-        meansd_prev_diff_subjave(revindexsubset,2) = std(prev_diff_subjave(:,revindexsubset));
+        meansd_prev_diff_subjave(revindexsubset, 1) = mean(prev_diff_subjave(:, revindexsubset));
+        meansd_prev_diff_subjave(revindexsubset, 2) = std(prev_diff_subjave(:, revindexsubset));
 
-        meansd_beta_diff_subjave(revindexsubset,1) = mean(beta_diff_subjave(:,revindexsubset));
-        meansd_beta_diff_subjave(revindexsubset,2) = std(beta_diff_subjave(:,revindexsubset));
+        meansd_beta_diff_subjave(revindexsubset, 1) = mean(beta_diff_subjave(:, revindexsubset));
+        meansd_beta_diff_subjave(revindexsubset, 2) = std(beta_diff_subjave(:, revindexsubset));
 
-Correlation between the two parameters between subject is computed for each simulation.  
+Correlation coefficient between the two parameters between subject is computed for each simulation.  
         
-        corr_prev_beta = zeros(2*nsim,1);
+        corr_prev_beta = zeros(2*nsim, 1);
         for isim = 1:2*nsim
-            corr_prev_beta(isim) = corr(prev_recov_cattask(isim,:)', beta_recov_cattask(isim,:)'); % transposed to use function 'corr'
+            corr_prev_beta(isim) = corr(prev_recov_cattask(isim,: )', beta_recov_cattask(isim, :)'); % transposed to use function 'corr'
         end
 
         mean_corr_prev_beta(revindexsubset) = mean(corr_prev_beta)
@@ -221,7 +221,7 @@ Correlation between the two parameters between subject is computed for each simu
 
 
 Saving workspace. 
-NB: As git only allow files < 25 Mb, the commented code was used to split the variable of interest into two separate files ([prev_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_recov_2x5000sim_12-24-48-96subj.mat) & [beta_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_recov_2x5000sim_12-24-48-96subj.mat)).
+NB: As git only allows files < 25 Mb, the commented code was used to split the variable of interest into two separate files ([prev_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_recov_2x5000sim_12-24-48-96subj.mat) & [beta_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_recov_2x5000sim_12-24-48-96subj.mat)).
     
     dout = '../Out/' % folder for produced data
 
@@ -271,13 +271,13 @@ Histograms of the paramterers according the subject subset they were estimated f
     finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
                                mean_corr_prev_beta, 'Correlation coefficients', 'corr', 'r')
 
-    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title,...
+    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
                                shared_var, 'Shared variance', 'sharedvar', 'R^2')
 
 ### [Final plots: plotted histograms (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
 
     function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
-                                     f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
+                                         f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
         % Plot the histogram curves of the difference between the recovered and fixed value according to subject subsets 
         %      for each parameter (prev & beta) as well as their normalised estimation.
         % Input:  'f_dout'                        folder for data (dout)
@@ -296,9 +296,9 @@ Histograms of the paramterers according the subject subset they were estimated f
 
         f_formatSpec_title = '%sifference recovered-fixed %s (2x%d simulations)';
 
-        lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
+        lgd = cell(length(f_nsubjsubset), 1); % to create an 'automatic' legend corresponding with each subset
         for irevindexsubset = 1:length(f_nsubjsubset)
-           lgd{irevindexsubset}= sprintf('%d subjects',f_nsubjsubset(irevindexsubset));
+           lgd{irevindexsubset}= sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
         end
 
 
@@ -307,12 +307,12 @@ Histograms of the paramterers according the subject subset they were estimated f
         name_title = sprintf(f_formatSpec_title, 'D', f_strparam, f_nsim);
         title(name_title);
 
-        [n, x] = hist(f_param_diff_subjave,f_nbins);  
+        [n, x] = hist(f_param_diff_subjave, f_nbins);  
         plot(x, n, 'LineWidth',2)
 
         ylabel('Number of simulations');
         xlabel(['Difference recovered-fixed, ',f_strparam]);
-        set(gca,'XGrid','on','YGrid','off')
+        set(gca, 'XGrid', 'on', 'YGrid', 'off')
         legend(lgd);
         hold off
 
@@ -329,25 +329,25 @@ Histograms of the paramterers according the subject subset they were estimated f
         title(name_title);
 
         nbins_pdf = length(f_param_diff_subjave);
-        [~, x_norm] = hist(f_param_diff_subjave,nbins_pdf);
+        [~, x_norm] = hist(f_param_diff_subjave, nbins_pdf);
         y = zeros(nbins_pdf, length(f_nsubjsubset));
         for irevindexsubset = 1:length(f_nsubjsubset)
            pd = fitdist(f_param_diff_subjave(:,irevindexsubset), 'Normal');
-           y(:,irevindexsubset) = pdf(pd,x_norm);
+           y(:, irevindexsubset) = pdf(pd, x_norm);
         end
-        plot(x_norm, y,'LineWidth',2)
+        plot(x_norm, y, 'LineWidth', 2)
 
-        set(gca,'ColorOrderIndex',1) % to reset the default color order
-        [n, x] = hist(f_param_diff_subjave,f_nbins);
+        set(gca, 'ColorOrderIndex', 1) % to reset the default color order
+        [n, x] = hist(f_param_diff_subjave, f_nbins);
         empirical_pd = zeros(f_nbins, length(f_nsubjsubset));
         for irevindexsubset = 1:length(f_nsubjsubset)
-           empirical_pd(:,irevindexsubset) = n(:,irevindexsubset)/trapz(x,n(:,irevindexsubset)); % so that AUC = 1
+           empirical_pd(:, irevindexsubset) = n(:, irevindexsubset)/trapz(x, n(:,irevindexsubset)); % so that AUC = 1
         end
-        plot(x, empirical_pd,':','LineWidth',1)
+        plot(x, empirical_pd, ':', 'LineWidth', 1)
 
         ylabel('Probability density');
         xlabel(['Difference recovered-fixed, ',f_strparam]);
-        set(gca,'XGrid','on','YGrid','off')
+        set(gca, 'XGrid', 'on', 'YGrid', 'off')
         legend(lgd);
         hold off
 
@@ -378,9 +378,9 @@ Histograms of the paramterers according the subject subset they were estimated f
         %         'f_ylabel'                      y label (e.g, math name for corr: 'r', sharedvar: 'R^2')
         % Output: one figure saved (for either prev or beta)
 
-        lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
+        lgd = cell(length(f_nsubjsubset), 1); % to create an 'automatic' legend corresponding with each subset
         for irevindexsubset = 1:length(f_nsubjsubset)
-           lgd{irevindexsubset}= sprintf('%d subjects',f_nsubjsubset(irevindexsubset));
+           lgd{irevindexsubset}= sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
         end
 
 
@@ -421,7 +421,7 @@ Histograms of the paramterers according the subject subset they were estimated f
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_mean_beta_2x5000sim_12-24-48-96subj.png)
 
 
-The plots shows a slight surestimation of the recovered values (e.g., around + 0.0050  for the probability of reversal and around + 0.0526 for choice variability, both for 24 subjects). Unsurprisingly, the more subjects, the smaller the variance. 
+The plots shows a slight surestimation of the recovered values (e.g., around +0.0050  for the probability of reversal and around +0.0526 for choice variability, both for 24 subjects). Unsurprisingly, the more subjects, the smaller the variance. 
 
 
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_corr_2x5000sim_12-24-48-96subj.png)
@@ -450,7 +450,7 @@ Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of 
     mean_beta_fit = mean(beta_fit(:))
 
 
-Using a function "sim_model_softmax", dataset are simulated using different values as fixed parameters, in order to study the ability of the fitting procedure to recover a certain different within a parameter while the other is kept constant (see 'ndiff'; nsim simulated datasets).
+Using a function "sim_model_softmax", datasets are simulated using different values as fixed parameters, in order to study the ability of the fitting procedure to recover a certain different within a parameter while the other is kept constant (see 'ndiff'; nsim simulated datasets).
 
     nsim              = 30;                % number of simulations
     nttest            = 100;               % number of ttests
@@ -490,11 +490,11 @@ Using a function "sim_model_softmax", dataset are simulated using different valu
 
         for isubjsubset = nsubjsubset
                 % preallocation
-                prev_recov = zeros(isubjsubset,2,nsim);
-                beta_recov = zeros(isubjsubset,2,nsim);
+                prev_recov = zeros(isubjsubset, 2, nsim);
+                beta_recov = zeros(isubjsubset, 2, nsim);
 
                 isubjsubset % to display the current subset running in MATLAB LiveScript environment 
-                seq_isubjsubsest = randperm(nsubj,isubjsubset) % to avoid selecting deterministically the same subjects across subsets
+                seq_isubjsubsest = randperm(nsubj, isubjsubset) % to avoid selecting deterministically the same subjects across subsets
             for ittest = 1:nttest
                 for isubj = seq_isubjsubsest
                 % given script -->
@@ -522,8 +522,8 @@ Then each datasets is fit using the function "fit_model_softmax".
                             cfg_fit        = [];
                             cfg_fit.seqllr = out_sim.cfg.seqllr;
                             cfg_fit.seqind = out_sim.cfg.seqind;
-                            cfg_fit.raft   = out_sim.raft(:,isim);
-                            cfg_fit.rbef   = out_sim.rbef(:,isim);
+                            cfg_fit.raft   = out_sim.raft(:, isim);
+                            cfg_fit.rbef   = out_sim.rbef(:, isim);
                             cfg_fit.brep   = out_sim.cfg.brep; % force no repetition bias
                             cfg_fit.epsi   = out_sim.cfg.epsi; % force no lapses
 
@@ -533,10 +533,10 @@ Then each datasets is fit using the function "fit_model_softmax".
 Estimated value of prev and beta from each simulation are stored and their average value is computed.
 
                             % store model parameters
-                            revindexsubj = find(seq_isubjsubsest==isubj); % isubj goes over the index limit due to the 
+                            revindexsubj = find(seq_isubjsubsest == isubj); % isubj goes over the index limit due to the 
                                                                           % use of subsets --> reverse indexing
-                            prev_recov(revindexsubj,itask,isim) = out_recov.prev;
-                            beta_recov(revindexsubj,itask,isim) = out_recov.beta;
+                            prev_recov(revindexsubj, itask, isim) = out_recov.prev;
+                            beta_recov(revindexsubj, itask, isim) = out_recov.beta;
                         end    
                     end
                 end
@@ -545,44 +545,44 @@ Paired-sample t-test + data saving for each given difference (ndiff).
                 
                 revindexsubset = find(nsubjsubset==isubjsubset);    
 
-                [h,p,ci,stats] = ttest(prev_recov(1,1,:),prev_recov(1,2,:));
+                [h,p,ci,stats] = ttest(prev_recov(1, 1, :),prev_recov(1, 2, :));
                 prev_ttest(ittest, 1, revindexsubset) = h;
                 prev_ttest(ittest, 2, revindexsubset) = p;
-                prev_ttest(ittest, 3, revindexsubset) = ci(:,:,1);
-                prev_ttest(ittest, 4, revindexsubset) = ci(:,:,2);
+                prev_ttest(ittest, 3, revindexsubset) = ci(:, :, 1);
+                prev_ttest(ittest, 4, revindexsubset) = ci(:, :, 2);
                 prev_ttest(ittest, 5, revindexsubset) = stats.sd;
 
                 [h,p,ci,stats] = ttest(beta_recov(1,1,:),beta_recov(1,2,:));
                 beta_ttest(ittest, 1, revindexsubset) = h;
                 beta_ttest(ittest, 2, revindexsubset) = p;
-                beta_ttest(ittest, 3, revindexsubset) = ci(:,:,1);
-                beta_ttest(ittest, 4, revindexsubset) = ci(:,:,2);
+                beta_ttest(ittest, 3, revindexsubset) = ci(:, :, 1);
+                beta_ttest(ittest, 4, revindexsubset) = ci(:, :, 2);
                 beta_ttest(ittest, 5, revindexsubset) = stats.sd;
 
             end
 
-            prev_diffsigni(:,:,revindexsubset) = [length(find(prev_ttest(:,1,revindexsubset) == 1)) nttest]; %ttest counter
-            beta_diffsigni(:,:,revindexsubset) = [length(find(beta_ttest(:,1,revindexsubset) == 1)) nttest];
+            prev_diffsigni(:, :, revindexsubset) = [length(find(prev_ttest(:, 1, revindexsubset) == 1)) nttest]; %ttest counter
+            beta_diffsigni(:, :, revindexsubset) = [length(find(beta_ttest(:, 1, revindexsubset) == 1)) nttest];
 
 
         end
 
-        prev_diffsigni_acrossdiff(:,:,:,revindexdiff) = prev_diffsigni % to save data across differences tested
-        beta_diffsigni_acrossdiff(:,:,:,revindexdiff) = beta_diffsigni % displayed in MATLAB LiveScript environment
+        prev_diffsigni_acrossdiff(:, :, :, revindexdiff) = prev_diffsigni % to save data across differences tested
+        beta_diffsigni_acrossdiff(:, :, :, revindexdiff) = beta_diffsigni % displayed in MATLAB LiveScript environment
 
         str_nsubjsubset = ''; % to nicely convert nsubjsubset into a string, e.g., "12-24-48-96"
         for isubjsubset = nsubjsubset
-            str_nsubjsubset = [str_nsubjsubset, num2str(isubjsubset),'-'];
+            str_nsubjsubset = [str_nsubjsubset, num2str(isubjsubset), '-'];
         end
         str_nsubjsubset = str_nsubjsubset(1:end-1) % to delete the last (useless) '-'
 
         formatSpec_file = '%s%s_(%g-%g)diff_%ssubj_%dx%dsim.mat';
     
-        name_file = sprintf(formatSpec_file, dout,'prev_ttest',idiff(1),idiff(2),str_nsubjsubset,nttest,nsim);
+        name_file = sprintf(formatSpec_file, dout, 'prev_ttest', idiff(1), idiff(2), str_nsubjsubset, nttest, nsim);
         save(name_file, 'dout', 'ndiff', 'idiff','nsubjsubset','nsim','nttest','prev_ttest','prev_diffsigni')
 
-        name_file = sprintf(formatSpec_file, dout,'beta_ttest',idiff(1),idiff(2),str_nsubjsubset,nttest,nsim);
-        save(name_file, 'dout', 'ndiff', 'idiff','nsubjsubset','nsim','nttest','beta_ttest','beta_diffsigni')
+        name_file = sprintf(formatSpec_file, dout, 'beta_ttest', idiff(1), idiff(2), str_nsubjsubset, nttest, nsim);
+        save(name_file, 'dout', 'ndiff', 'idiff', 'nsubjsubset', 'nsim', 'nttest', 'beta_ttest', 'beta_diffsigni')
 
     end
 
@@ -609,10 +609,10 @@ Final workscape saving ADD LINK TO SAVED WORKSPACE.
 
     % To save only the variables needed for plotting:
     % name_file = sprintf(formatSpec_file, dout, 'prev', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
-    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim','nttest','prev_diffsigni_acrossdiff', 'prevonly_diff_index')
+    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim', 'nttest', 'prev_diffsigni_acrossdiff', 'prevonly_diff_index')
     % 
     % name_file = sprintf(formatSpec_file, dout, 'beta', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
-    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim','nttest','beta_diffsigni_acrossdiff', 'betaonly_diff_index')
+    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim', 'nttest', 'beta_diffsigni_acrossdiff', 'betaonly_diff_index')
 
 
                              
@@ -642,26 +642,26 @@ Final workscape saving ADD LINK TO SAVED WORKSPACE.
         f_formatSpec_fig = '%sfig_%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s';
 
 
-        f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:,:,:,f_param_diff_index); % to only select the differences for either prev or beta
+        f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:, :, :, f_param_diff_index); % to only select the differences for either prev or beta
 
         y = zeros(length(f_param_diff_index), 1); % preallocation
         for revindexsubset = 1:length(f_nsubjsubset) % loop to obtain the percentage of significant ttests
             for i = 1:length(f_param_diff_index)
-                div = f_paramonly_diffsigni_acrossdiff(:,:,revindexsubset,i);
-                y(i) = 100 * div(:,1) ./ div(:,2);
+                div = f_paramonly_diffsigni_acrossdiff(:, :, revindexsubset, i);
+                y(i) = 100 * div(:, 1) ./ div(:, 2);
             end
-            x = f_ndiff(f_param_diff_index,f_ndiffdim);
+            x = f_ndiff(f_param_diff_index, f_ndiffdim);
 
             h = figure;
             hold on
-            name_title = sprintf(f_formatSpec_title, f_strparam,f_strparam_cte,f_nttest,f_nsim,f_nsubjsubset(revindexsubset));
+            name_title = sprintf(f_formatSpec_title, f_strparam, f_strparam_cte, f_nttest, f_nsim, f_nsubjsubset(revindexsubset));
             title(name_title);
-            plot(x,y,'o-','LineWidth',2)
+            plot(x, y, 'o-', 'LineWidth', 2)
             ylabel('Percentage of significant t-tests');
             xlabel('Difference tested')
             hold off
 
-            name_fig = sprintf(f_formatSpec_fig, f_dout,f_strparam_short,length(f_param_diff_index),f_nsubjsubset(revindexsubset),f_nttest,f_nsim,'.png');
+            name_fig = sprintf(f_formatSpec_fig, f_dout, f_strparam_short, length(f_param_diff_index), f_nsubjsubset(revindexsubset), f_nttest, f_nsim, '.png');
             saveas(h, name_fig);   
         end
     end
