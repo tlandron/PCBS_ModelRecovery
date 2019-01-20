@@ -11,8 +11,8 @@ function [outf_prev_fit, outf_beta_fit] = initialfit(f_nrep, f_nsubj, f_dat, f_s
     %                 second dimension 'itask' corresponds to each task,
     %                 third dimension 'irep' corresponds to each repetition.
 
-    outf_prev_fit = zeros(f_nsubj,2,f_nrep);
-    outf_beta_fit = zeros(f_nsubj,2,f_nrep);
+    outf_prev_fit = zeros(f_nsubj, 2, f_nrep);
+    outf_beta_fit = zeros(f_nsubj, 2, f_nrep);
 
     for irep = 1:f_nrep
         for isubj = 1:f_nsubj
@@ -33,8 +33,8 @@ function [outf_prev_fit, outf_beta_fit] = initialfit(f_nrep, f_nsubj, f_dat, f_s
                 out_fit = fit_model_softmax(cfg_fit);
 
                 % store model parameters
-                outf_prev_fit(isubj,itask,irep) = out_fit.prev;
-                outf_beta_fit(isubj,itask,irep) = out_fit.beta;
+                outf_prev_fit(isubj, itask, irep) = out_fit.prev;
+                outf_beta_fit(isubj, itask, irep) = out_fit.beta;
 
             end
         end

@@ -20,7 +20,7 @@ function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f
 
     lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
     for irevindexsubset = 1:length(f_nsubjsubset)
-       lgd{irevindexsubset}= sprintf('%d subjects',f_nsubjsubset(irevindexsubset));
+       lgd{irevindexsubset} = sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
     end
 
     h = figure; % y = number of stimulations
@@ -28,12 +28,12 @@ function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f
     name_title = sprintf(f_formatSpec_title, 'D', f_strparam, f_nsim);
     title(name_title);
 
-    [n, x] = hist(f_param_diff_subjave,f_nbins);  
+    [n, x] = hist(f_param_diff_subjave, f_nbins);  
     plot(x, n, 'LineWidth',2)
 
     ylabel('Number of simulations');
-    xlabel(['Difference recovered-fixed, ',f_strparam]);
-    set(gca,'XGrid','on','YGrid','off')
+    xlabel(['Difference recovered-fixed, ', f_strparam]);
+    set(gca, 'XGrid', 'on', 'YGrid', 'off')
     legend(lgd);
     hold off
 
@@ -55,22 +55,22 @@ function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f
     [~, x_norm] = hist(f_param_diff_subjave,nbins_pdf);
     y = zeros(nbins_pdf, length(f_nsubjsubset));
     for irevindexsubset = 1:length(f_nsubjsubset)
-       pd = fitdist(f_param_diff_subjave(:,irevindexsubset), 'Normal');
-       y(:,irevindexsubset) = pdf(pd,x_norm);
+       pd = fitdist(f_param_diff_subjave(:, irevindexsubset), 'Normal');
+       y(:, irevindexsubset) = pdf(pd, x_norm);
     end
-    plot(x_norm, y,'LineWidth',2)
+    plot(x_norm, y, 'LineWidth', 2)
 
-    set(gca,'ColorOrderIndex',1) % to reset the default color order
-    [n, x] = hist(f_param_diff_subjave,f_nbins);
+    set(gca, 'ColorOrderIndex', 1) % to reset the default color order
+    [n, x] = hist(f_param_diff_subjave, f_nbins);
     empirical_pd = zeros(f_nbins, length(f_nsubjsubset));
     for irevindexsubset = 1:length(f_nsubjsubset)
-       empirical_pd(:,irevindexsubset) = n(:,irevindexsubset)/trapz(x,n(:,irevindexsubset)); % so that AUC = 1
+       empirical_pd(:, irevindexsubset) = n(:, irevindexsubset)/trapz(x, n(:, irevindexsubset)); % so that AUC = 1
     end
-    plot(x, empirical_pd,':','LineWidth',1)
+    plot(x, empirical_pd, ':', 'LineWidth', 1)
 
     ylabel('Probability density');
-    xlabel(['Difference recovered-fixed, ',f_strparam]);
-    set(gca,'XGrid','on','YGrid','off')
+    xlabel(['Difference recovered-fixed, ', f_strparam]);
+    set(gca, 'XGrid', 'on', 'YGrid', 'off')
     legend(lgd);
     hold off
 

@@ -22,26 +22,27 @@ function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f
     f_formatSpec_fig = '%sfig_%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s';
 
    
-    f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:,:,:,f_param_diff_index); % to only select the differences for either prev or beta
+    f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:, :, :, f_param_diff_index); % to only select the differences for either prev or beta
 
-    y = zeros(length(f_param_diff_index), 1); % preallocation
+    y = zeros(length(f_param_diff_index), 1); % preallocation of percentage of significant ttests
     for revindexsubset = 1:length(f_nsubjsubset) % loop to obtain the percentage of significant ttests
         for i = 1:length(f_param_diff_index)
-            div = f_paramonly_diffsigni_acrossdiff(:,:,revindexsubset,i);
-            y(i) = 100 * div(:,1) ./ div(:,2);
+            div = f_paramonly_diffsigni_acrossdiff(:, :, revindexsubset, i);
+            y(i) = 100 * div(:, 1) ./ div(:, 2);
         end
-        x = f_ndiff(f_param_diff_index,f_ndiffdim);
+        x = f_ndiff(f_param_diff_index, f_ndiffdim);
 
         h = figure;
         hold on
-        name_title = sprintf(f_formatSpec_title, f_strparam,f_strparam_cte,f_nttest,f_nsim,f_nsubjsubset(revindexsubset));
+        name_title = sprintf(f_formatSpec_title, f_strparam, f_strparam_cte, f_nttest, f_nsim, f_nsubjsubset(revindexsubset));
         title(name_title);
-        plot(x,y,'o-','LineWidth',2)
+        plot(x, y, 'o-', 'LineWidth', 2)
         ylabel('Percentage of significant t-tests');
         xlabel('Difference tested')
         hold off
 
-        name_fig = sprintf(f_formatSpec_fig, f_dout,f_strparam_short,length(f_param_diff_index),f_nsubjsubset(revindexsubset),f_nttest,f_nsim,'.png');
+        name_fig = sprintf(f_formatSpec_fig, f_dout, f_strparam_short, length(f_param_diff_index), ...
+                           f_nsubjsubset(revindexsubset), f_nttest, f_nsim,'.png');
         saveas(h, name_fig);   
     end
 end

@@ -17,9 +17,9 @@ function finalplots_hmscatter(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, 
     %         'f_ylabel'                      y label (e.g, math name for corr: 'r', sharedvar: 'R^2')
     % Output: one figure saved (for either prev or beta)
 
-    lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
+    lgd = cell(length(f_nsubjsubset), 1); % to create an 'automatic' legend corresponding with each subset
     for irevindexsubset = 1:length(f_nsubjsubset)
-       lgd{irevindexsubset}= sprintf('%d subjects',f_nsubjsubset(irevindexsubset));
+       lgd{irevindexsubset} = sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
     end
     
     
@@ -28,7 +28,7 @@ function finalplots_hmscatter(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, 
     title(sprintf(f_formatSpec_title, f_strtoplot, f_nsim))
     
     for i = 1:length(f_toplot)
-        scatter(0,f_toplot(i))
+        scatter(0, f_toplot(i))
     end
 
     m = mean(f_toplot);
