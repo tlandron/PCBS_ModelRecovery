@@ -4,16 +4,16 @@
 The context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
 
 ## Given scripts
-- for loading the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/loaddata.m),
+- to load the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/loaddata.m):
     - computes the reversal curves and the repetition  curves, for each subject and condition,
     - also creates a massive data array 'dat' storing the data of all subjects and conditions;
-- simulation procedure [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m),
-    - produces simulated datasets from actual data, stores them in data array 'cfg';
-- fit procedure [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m),
-    - given datasets 'cfg', compute the two parameter of interest: the probability of reversal 'prev' and choice variability 'beta' for each subject and condition.
+- simulation procedure [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m):
+    - produces simulated datasets from actual data, stores them in data array ('cfg');
+- fit procedure [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m):
+    - given datasets ('cfg'), computes the two parameters of interest: the probability of reversal ('prev') and choice variability ('beta') for each subject and condition.
 
 ## Initial fits
-A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/initialfit.m), in order to obtain a reference value for each variable of interest (prev_fit, beta_fit) was a adapted from the [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m) as a function that runs for 'nrep' repetitions of the fitting procedure using the actual dataset.
+A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/initialfit.m), in order to obtain a reference value fixed for each variable of interest (prev_fit, beta_fit) was a adapted from the [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m) as a function that runs for 'nrep' repetitions of the fitting procedure using the actual dataset.
 
 
     function [outf_prev_fit, outf_beta_fit] = initialfit(f_nrep, f_nsubj, f_dat, f_subjlist)
@@ -63,12 +63,12 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
 
 ## [Part 1: Study of the difference between the recovered values and the reference parameter values](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL.mlx)
 
-Load the data.
+Data loading.
     
     loaddata
 
 
-Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal (prev) and the choice probability (beta), that will serve fixed refence values to the next analyses.
+Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal and the choice probability, that will serve fixed refence values to the next analyses ('prev_fix', 'beta_fix').
 
     nrep = 10;
 
@@ -79,7 +79,7 @@ Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of 
     beta_fix = mean(beta_fit(:))
 
 
-In this first part, the two different task are not differentiated: the parameters are the same across the 2 tasks, resulting in (2 x nsim) simulated datasets.
+In this first part, the two different task are not differentiated: the parameters are the same across the 2 tasks, resulting in 2x'nsim' simulated datasets.
 
     nsim              = 5000;         % number of simulations
     nsubjsubset       = [12 24 48 96] % subset(s) of participants (w/out consideration for condition, 96 = all)
@@ -124,7 +124,8 @@ In this first part, the two different task are not differentiated: the parameter
 
                 out_sim        = sim_model_softmax(cfg_sim);
 
-            Then each datasets is fit using the (given) function "fit_model_softmax".
+   Then each datasets is fit using the function "fit_model_softmax".
+   
                 % fit simulated decisions
                 for isim = 1:nsim
                     cfg_fit        = [];
@@ -136,8 +137,10 @@ In this first part, the two different task are not differentiated: the parameter
                     cfg_fit.epsi   = out_sim.cfg.epsi; % force no lapses
 
                     out_recov = fit_model_softmax(cfg_fit);
-        % <-- given script             
-            Estimated value of prev and beta from each simulation are stored and their average value is computed.
+        % <-- given script
+        
+   Estimated values of prev and beta from each simulation are stored and their average value is computed.
+
                     % store model parameters
                     revindexsubj = find(seq_isubjsubsest==isubj); % isubj goes over the index limit due to the 
                                                                   % use of subsets --> reverse indexing
@@ -147,7 +150,8 @@ In this first part, the two different task are not differentiated: the parameter
             end
         end
         
-Variables to plot histograms & histograms of the recovered parameters (if figures wanted, uncomment;  CAUTION: variables stored across subsets needed for final saving).
+Variables to plot histograms & histograms of the recovered parameters 
+(if figures wanted, uncomment;  CAUTION: variables stored across subsets needed for final saving).
 
         prev_recov_cattask = squeeze(cat(3,prev_recov(:,1,:),prev_recov(:,2,:)))'; % concatenation of the data for the ...
         beta_recov_cattask = squeeze(cat(3,beta_recov(:,1,:),beta_recov(:,2,:)))'; % two tasks into one array (as if one task)
@@ -169,8 +173,8 @@ Variables to plot histograms & histograms of the recovered parameters (if figure
     %     hist(beta_recov_subjave(:,revindexsubset));
     %     hold off
 
-
-Variables to plot histograms & histograms of the difference between the recovered-fixed parameters (if figures wanted, uncomment; CAUTION: variables stored across subsets needed for final saving & final plots).
+Variables to plot histograms & histograms of the difference between the recovered-fixed parameters 
+(if figures wanted, uncomment; CAUTION: variables stored across subsets needed for final saving & final plots).
 
         prev_diff = prev_recov - prev_fix;
         beta_diff = beta_recov - beta_fix;
@@ -194,7 +198,7 @@ Variables to plot histograms & histograms of the difference between the recovere
     %     hist(beta_diff_subjave(:,revindexsubset));
     %     hold off
 
-Mean & variance of the distribution of recovered parameters across simulations for each subset of participants.
+Mean & variance of the distribution of the parameter difference recovered-fixed across simulations for each subset of subjects.
         
         meansd_prev_diff_subjave(revindexsubset,1) = mean(prev_diff_subjave(:,revindexsubset));
         meansd_prev_diff_subjave(revindexsubset,2) = std(prev_diff_subjave(:,revindexsubset));
@@ -215,8 +219,9 @@ Correlation between the two parameters between subject is computed for each simu
     end
 
 
+
 Saving workspace. 
-NB: As git only allow files < 25 Mb, the commented code was used ([prev_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_recov_2x5000sim_12-24-48-96subj.mat) & [beta_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_recov_2x5000sim_12-24-48-96subj.mat)).
+NB: As git only allow files < 25 Mb, the commented code was used to split the variable of interest into two separate files ([prev_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_recov_2x5000sim_12-24-48-96subj.mat) & [beta_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_recov_2x5000sim_12-24-48-96subj.mat)).
     
     dout = '../Out/' % folder for produced data
 
@@ -241,7 +246,7 @@ NB: As git only allow files < 25 Mb, the commented code was used ([prev_variable
     %                 'meansd_beta_diff_subjave', 'mean_corr_prev_beta', 'shared_var')
 
 
-Histograms of the paramterer according the number of subject they were estimated from (n = 12, 24, 48 or 96).
+Histograms of the paramterers according the subject subset they were estimated from (in this case, n = 12, 24, 48 or 96).
 
     nbins = 100; % can be manually changed to the 'apparent noise' on the raw curves
             
@@ -428,14 +433,13 @@ The two parameter shares between 12-13% of variance, whatever the subject subset
  
 ## [Part 2 : Study of the minimal difference discriminated by the fitting procedure](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL(mindiff).mlx)
 
-Load the data.
+Data loading.
 
     loaddata
 
     dout = '../Out/' % folder for produced data
     
-
-Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal (prev) and the choice variability (beta), that serves as fix reference values to the next analyses.
+Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal and the choice probability.
 
     nrep = 10;
 
@@ -446,7 +450,7 @@ Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of 
     mean_beta_fit = mean(beta_fit(:))
 
 
-Using a (given) function "sim_model_softmax", dataset are simulated using the fixed parameters (nsim simulated datasets).
+Using a function "sim_model_softmax", dataset are simulated using different values as fixed parameters, in order to study the ability of the fitting procedure to recover a certain different within a parameter while the other is kept constant (see 'ndiff'; nsim simulated datasets).
 
     nsim              = 30;                % number of simulations
     nttest            = 100;               % number of ttests
@@ -511,7 +515,7 @@ Using a (given) function "sim_model_softmax", dataset are simulated using the fi
 
                         out_sim        = sim_model_softmax(cfg_sim);
 
-Then each datasets is fit using the (given) function "fit_model_softmax".
+Then each datasets is fit using the function "fit_model_softmax".
                         
                         % fit simulated decisions
                         for isim = 1:nsim
@@ -537,8 +541,7 @@ Estimated value of prev and beta from each simulation are stored and their avera
                     end
                 end
 
-
-Paired-sample t-test + data saving for each given difference (ndiff)
+Paired-sample t-test + data saving for each given difference (ndiff).
                 
                 revindexsubset = find(nsubjsubset==isubjsubset);    
 
@@ -585,7 +588,7 @@ Paired-sample t-test + data saving for each given difference (ndiff)
 
 
 
-Plot of significant t-tests as a function of the difference in value for each parameter (only works while the value of the other is kept constant)
+Plot of significant t-tests as a function of the difference in value for each parameter (only works while the value of the other is kept constant).
     
     prevonly_diff_index = [1 2 3 4 5 6 7]    ; % to enter manually according to respective index in 'ndiff'
     finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 1, prevonly_diff_index,     ...
@@ -597,7 +600,7 @@ Plot of significant t-tests as a function of the difference in value for each pa
                              beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
                              'probability of reversal')
  
-Final workscape saving ADD LINK TO SAVED WORKSPACE
+Final workscape saving ADD LINK TO SAVED WORKSPACE.
 
     formatSpec_file = '%s%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s'
 
@@ -667,7 +670,9 @@ Final workscape saving ADD LINK TO SAVED WORKSPACE
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_prev_diffsigni_across7diff_24subj_100x30sim.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_beta_diffsigni_across7diff_24subj_100x30sim.png)
 
-The plots suggest that the fit procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (100%).
+Arbitrarily, a subset of 24 subjects was considered in the second part.
+The plots confirm that the fitting procedure false positive rate is around 5% (when there is no difference between the simulated parameter and the fitted one) and suggest that the fitting procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (100%). 
+Such values are much smaller than the difference within parameters observed between the two tasks in the actual data (... - ... = ... for prev and ... - ... = ... for beta).
 
 
 ## Conclusion
