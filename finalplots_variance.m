@@ -6,10 +6,10 @@ function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f
     %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
     %         'f_nsim'                        number of simulations (nsim)
     %         'f_str_nsubjsubset'             string version of nsubjsubset (str_nsubjsubset)
-    %         'f_formatSpec_file'             string format for saved figure ('formatSpec_file)
-    %         'f_nbins'                       number of bins for raw histogram ('nbins')
+    %         'f_formatSpec_file'             string format for saved figure (formatSpec_file)
+    %         'f_nbins'                       number of bins for raw histogram (nbins)
     %         'f_param_diff_subjave'          parameter average across subject for each simulation ...
-    %                                         ('prev/beta_diff_subjave')
+    %                                         (prev/beta_diff_subjave)
     %         'f_strparam'                    full name of the parameter ...
     %                                         ('probability of reversal' or 'choice variability')        
     %         'f_strparam_short'              shortened name of the parameter ('prev' or 'beta')
@@ -18,7 +18,7 @@ function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f
 
     f_formatSpec_title = '%sifference recovered-fixed %s (2x%d simulations)';
 
-    lgd = cell(length(f_nsubjsubset),1); % to create an 'automatic' legend corresponding with each subset
+    lgd = cell(length(f_nsubjsubset), 1); % to create an 'automatic' legend corresponding with each subset
     for irevindexsubset = 1:length(f_nsubjsubset)
        lgd{irevindexsubset} = sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
     end

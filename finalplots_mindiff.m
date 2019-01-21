@@ -1,7 +1,7 @@
 function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim,      ...
                              f_diffparam_fit, f_param_diff_index, f_param_diffsigni_acrossdiff, ... 
                              f_strparam, f_strparam_short, f_strparam_cte)
-    % Plot the number of significant ttests according to the difference tested
+    % Plots the number of significant ttests according to the difference tested.
     % Input:  'f_dout'                        folder for data (dout)
     %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
     %         'f_nsim'                        number of simulations (nsim)
@@ -25,7 +25,8 @@ function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f
     f_formatSpec_fig = '%sfig_%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s';
 
    
-    f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:, :, :, f_param_diff_index); % to only select the differences for either prev or beta
+    f_paramonly_diffsigni_acrossdiff = f_param_diffsigni_acrossdiff(:, :, :, f_param_diff_index); % to only select the differences 
+                                                                                                  % for either prev or beta
 
     y = zeros(length(f_param_diff_index), 1); % preallocation of percentage of significant ttests
     for revindexsubset = 1:length(f_nsubjsubset) % loop to obtain the percentage of significant ttests
@@ -41,10 +42,10 @@ function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f
         title(name_title);
         plot(x, y, 'o-', 'LineWidth', 2)
         
-        xcst = [f_diffparam_fit f_diffparam_fit]; % to draw a vertical line for the difference between the two tasks in the actual dataset
-        ylimline = get(gca,'ylim');               % also works with xline function in MATLAB 2018
-        line(xcst, ylimline, 'Color','red','LineStyle','--');
-        
+        xcst = [f_diffparam_fit f_diffparam_fit];             % to draw a vertical line for the difference ...
+        ylimline = get(gca,'ylim');                           % between the two tasks in the actual dataset    
+        line(xcst, ylimline, 'Color','red','LineStyle','--'); % also works with xline function in MATLAB 2018
+
         set(gca, 'XGrid', 'on', 'YGrid', 'off')
         ylabel('Percentage of significant t-tests');
         xlabel('Difference tested')
