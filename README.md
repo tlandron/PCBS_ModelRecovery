@@ -623,6 +623,7 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
             ylimline = get(gca,'ylim');               % also works with xline function in MATLAB 2018
             line(xcst, ylimline, 'Color','red','LineStyle','--');
 
+            set(gca, 'XGrid', 'on', 'YGrid', 'off')
             ylabel('Percentage of significant t-tests');
             xlabel('Difference tested')
             hold off
@@ -642,7 +643,7 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
 
 Arbitrarily, a subset of 24 subjects was considered in the second part.
 The plots confirm that the fitting procedure false positive rate is around 5% (when there is no difference between the simulated parameter and the fitted one) and suggest that the fitting procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (close to 100%). 
-Such values are the same order as the difference within parameters observed between the two tasks in the actual data (0.2411 - 0.1763 = 0.0648 for prev and 1.3808 - 1.1071 = 0.2737 for beta).
+Such values are the same order as the difference within parameters observed between the two tasks in the actual data (*red dotted line*, 0.2411 - 0.1763 = 0.0648 for prev and 1.3808 - 1.1071 = 0.2737 for beta).
 
 
 ## General conclusion
