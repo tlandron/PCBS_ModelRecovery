@@ -2,8 +2,9 @@
 ## Validating project for PCBS course (Cogmaster, 2018-2019).
 
 The original context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
+
 Briefly, the goal of this project is to recover a model and its fitting procedure for a 2-task reversal learning paradigm. First, the recovered parameters of interest (the probability of reversal 'prev' and choice variability 'beta') will be studied across runs of simulations/fitting, especially focusing on the mean difference between the recovered parameter and a reference value (obtained with the actual dataset) to reveal any under- or overestimation.
-Second, the sensitivity of the fitting procedure will be studied by testing different values for each task within parameter.
+Second, the sensitivity of the fitting procedure will be studied by testing different values for each task within parameters.
 
 ---
 
@@ -300,7 +301,7 @@ Histograms of the paramterers according the subject subset they were estimated f
     finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
                                shared_var, 'Shared variance', 'sharedvar', 'R^2')
 
-### [Final plots: histograms](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
+### [Final plots: histograms script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
 
     function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
                                          f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
@@ -383,7 +384,7 @@ Histograms of the paramterers according the subject subset they were estimated f
 
     end
 
-### [Final plots: "home-made R-style" scatterplots](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_hmscatter.m)
+### [Final plots: "home-made R-style" scatterplots script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_hmscatter.m)
 
     function finalplots_hmscatter(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file,    ...
                                           f_formatSpec_title, f_toplot, f_strtoplot, f_strtoplot_short, f_ylabel)
@@ -647,7 +648,7 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
 
 
                              
-### [Final plots (part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
+### [Final plots script (part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
 
     function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim, f_param_diff_index, ...
                                  f_param_diffsigni_acrossdiff, f_strparam, f_strparam_short, f_strparam_cte)
