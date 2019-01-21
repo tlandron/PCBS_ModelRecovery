@@ -446,6 +446,9 @@ Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of 
     clear prev_fit beta_fit % to prevent any dimension error when using MATLAB LiveScript environment 
     [prev_fit, beta_fit] = initialfit(nrep, nsubj, dat, subjlist);
 
+    mean(mean(prev_fit, 1),3) % to display prev mean for each task: [0.2411 0.1763]
+    mean(mean(beta_fit, 1),3) % to display beta mean for each task: [1.3808 1.1071]
+
     mean_prev_fit = mean(prev_fit(:))
     mean_beta_fit = mean(beta_fit(:))
 
@@ -454,7 +457,7 @@ Using a function "sim_model_softmax", datasets are simulated using different val
 
     nsim              = 30;                % number of simulations
     nttest            = 100;               % number of ttests
-    ndiff             = [0      0   ; ...
+    ndiff             = [0      0   ; ...  % couples of differences to be tested
                          0.01   0   ; ...
                          0.02   0   ; ...
                          0.03   0   ; ...
@@ -466,7 +469,7 @@ Using a function "sim_model_softmax", datasets are simulated using different val
                          0      0.3 ; ...
                          0      0.4 ; ...
                          0      0.5 ; ...
-                         0      1   ]     % couples of differences to be tested
+                         0      1   ]     
     nsubjsubset       = [24]              % subset(s) of participants (w/out consideration for medical condition, 96 = all)
 
     % preallocation
@@ -530,11 +533,11 @@ Then each datasets is fit using the function "fit_model_softmax".
                             out_recov = fit_model_softmax(cfg_fit);
                 % <-- given script 
                 
-Estimated value of prev and beta from each simulation are stored and their average value is computed.
+Estimated values of prev and beta from each simulation are stored and their average value is computed.
 
                             % store model parameters
                             revindexsubj = find(seq_isubjsubsest == isubj); % isubj goes over the index limit due to the 
-                                                                          % use of subsets --> reverse indexing
+                                                                            % use of subsets --> reverse indexing
                             prev_recov(revindexsubj, itask, isim) = out_recov.prev;
                             beta_recov(revindexsubj, itask, isim) = out_recov.beta;
                         end    
@@ -600,9 +603,9 @@ Plot of significant t-tests as a function of the difference in value for each pa
                              beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
                              'probability of reversal')
  
-Final workscape saving ADD LINK TO SAVED WORKSPACE.
+Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/all_diffsigni_across7diff_24subj_100x30sim.mat)).
 
-    formatSpec_file = '%s%s_diffsigni_across%ddiff_%dsubj_%dx%dsim%s'
+    formatSpec_file = '%s%s_diffsigni_across%ddiff_%ssubj_%dx%dsim%s';
 
     name_file = sprintf(formatSpec_file, dout, 'all', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
     save(name_file) % to save the whole workspace
@@ -671,19 +674,21 @@ Final workscape saving ADD LINK TO SAVED WORKSPACE.
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_beta_diffsigni_across7diff_24subj_100x30sim.png)
 
 Arbitrarily, a subset of 24 subjects was considered in the second part.
-The plots confirm that the fitting procedure false positive rate is around 5% (when there is no difference between the simulated parameter and the fitted one) and suggest that the fitting procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (100%). 
-Such values are much smaller than the difference within parameters observed between the two tasks in the actual data (... - ... = ... for prev and ... - ... = ... for beta).
+The plots confirm that the fitting procedure false positive rate is around 5% (when there is no difference between the simulated parameter and the fitted one) and suggest that the fitting procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (close to 100%). 
+Such values are the same order as the difference within parameters observed between the two tasks in the actual data (0.2411 - 0.1763 = 0.0648 for prev and 1.3808 - 1.1071 = 0.2737 for beta).
 
 
 ## Conclusion
 The model recovery shows that the fitting procedure is reliable. 
 The first part focused on the difference between a reference value for each of the two parameters of interest and their recovered values from 10 000 simulations, in four different-sized subsets (12, 24, 48 and 96 subjects). While the fitting procedure slightly overestimates both parameters, such overestimations only represent around 0.005/0.209 = 2% of the mean probability of reversal fixed value across the two tasks and 0.05/1.24 = 4% of the mean choice variability fixed value across the two tasks.
-The second part studied the sensitivity of the fitting procedure to discriminate a difference in the parameters values between the two tasks, in a subset of 24 subjects. The "threshold" found for each parameter only represents 0.05/..(difference prev between tasks).. = ... % of the difference in the probability of reversal between the two tasks in the actual data and 0.3/..(difference beta between tasks).. = ... % of the difference in choice variability between the two tasks in the actual data.
+The second part studied the sensitivity of the fitting procedure to discriminate a difference in the parameters values between the two tasks, in a subset of 24 subjects and confirmed the high-enough fitting procedure sensitivy above 90% for each parameter.
+
+TO DELETE: The "threshold" found for each parameter only represents 0.05/..(difference prev between tasks).. = ... % of the difference in the probability of reversal between the two tasks in the actual data and 0.3/..(difference beta between tasks).. = ... % of the difference in choice variability between the two tasks in the actual data.
 
 
 What this project has brought to me:
-- I started almost from strach MATLAB language, I now have strong bases of it;
-- I got a first hand-on on the data I'll be using for the long internship during the second semester.
+- I started MATLAB language almost from strach, I now have strong bases of it;
+- I have got a first hand-on on the data I'll be using for the long internship during the second semester.
 
 How to improve the recovery procedure:
 - An easy way would be to increase the number of simulations, especially in the second part: more t-tests as well as more differences tested would sharpen the measure of sensitivity.
