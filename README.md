@@ -1,7 +1,26 @@
 # Programming for Cognitive and Brain Sciences: Development of model and parameter recovery procedures for the study of reversal learning
 ## Validating project for PCBS course (Cogmaster, 2018-2019).
 
-The context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
+The original context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
+Briefly, the goal of this project is to recover a model and its fitting procedure for a 2-task reversal learning paradigm. First, the recovered parameters of interest (the probability of reversal 'prev' and choice variability 'beta') will be studied across runs of simulations/fitting, especially focusing on the mean difference between the recovered parameter and a reference value (obtained with the actual dataset) to reveal any under- or overestimation.
+Second, the sensitivity of the fitting procedure will be studied by testing different values for each task within parameter.
+
+---
+
+<!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
+**Table of Contents**
+
+- [Given scripts](#given-scripts)
+- [Initial fits](#initial-fits)
+- [Part 1: Study of the difference between the recovered values and the reference parameter values](#part-1:-study-of-the-difference-between-the-recovered-values-and-the-reference-parameter-values)
+    - [On-line courses and books](#on-line-courses-and-books)
+    -
+- [License](#license)
+
+<!-- markdown-toc end -->
+
+---
+
 
 ## Given scripts
 - to load the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/loaddata.m):
