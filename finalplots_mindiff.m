@@ -1,5 +1,6 @@
-function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim, f_param_diff_index, ...
-                             f_param_diffsigni_acrossdiff, f_strparam, f_strparam_short, f_strparam_cte)
+function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim,      ...
+                             f_diffparam_fit, f_param_diff_index, f_param_diffsigni_acrossdiff, ... 
+                             f_strparam, f_strparam_short, f_strparam_cte)
     % Plot the number of significant ttests according to the difference tested
     % Input:  'f_dout'                        folder for data (dout)
     %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
@@ -7,6 +8,8 @@ function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f
     %         'f_nttest'                      number of ttests (nttest)
     %         'f_ndiff'                       differences to be tested (ndiff)
     %         'f_ndiffdim'                    1 for prev, 2 for beta
+    %         'f_diffparam_fit'               difference between the twotasks in the actual dataset ...
+    %                                         (prev/beta_diff_tasks)
     %         'f_param_diff_index'            index of the revelant difference for each ...
     %                                         parameter (prev/beta_diff_index)
     %         'f_param_diffsigni_acrossdiff'  results of ttests for the two parameters for all ...
@@ -37,6 +40,11 @@ function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f
         name_title = sprintf(f_formatSpec_title, f_strparam, f_strparam_cte, f_nttest, f_nsim, f_nsubjsubset(revindexsubset));
         title(name_title);
         plot(x, y, 'o-', 'LineWidth', 2)
+        
+        xcst = [f_diffparam_fit f_diffparam_fit]; % to draw a vertical line for the difference between the two tasks in the actual dataset
+        ylimline = get(gca,'ylim');               % also works with xline function in MATLAB 2018
+        line(xcst, ylimline, 'Color','red','LineStyle','--');
+                
         ylabel('Percentage of significant t-tests');
         xlabel('Difference tested')
         hold off
