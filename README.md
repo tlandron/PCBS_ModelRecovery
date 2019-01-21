@@ -12,9 +12,14 @@ Second, the sensitivity of the fitting procedure will be studied by testing diff
 
 - [Given scripts](#given-scripts)
 - [Initial fits](#initial-fits)
-- [Part 1: Study of the difference between the recovered values and the reference parameter values](#part-1:-study-of-the-difference-between-the-recovered-values-and-the-reference-parameter-values)
-    - [On-line courses and books](#on-line-courses-and-books)
-    -
+- [Part 1: Study of the difference between the recovered values and the reference parameter values](#part-1-study-of-the-difference-between-the-recovered-values-and-the-reference-parameter-values)
+    - [Main script (part 1)](#main-script-part-1)
+    - [Final plots: histograms](#final-plots-histograms)
+    - [Final plots: "home-made R-style" scatterplots](#final-plots-home-made-R-style-scatterplots)
+- [Part 2 : Study of the sensitivy of the fitting procedure](#part-2-study-of-the-sensitivity-of-the-fitting-procedure)
+    - [Main script (part 2)](#main-script-part-2)
+    - [Final plots (part 2)](#final-plots-part-2)
+- [Conclusion](#conclusion)
 - [License](#license)
 
 <!-- markdown-toc end -->
@@ -80,8 +85,8 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
 
 
 
-## [Part 1: Study of the difference between the recovered values and the reference parameter values](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL.mlx)
-
+## Part 1: Study of the difference between the recovered values and the reference parameter values
+### [Main script (part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL.mlx)
 Data loading.
     
     loaddata
@@ -293,7 +298,7 @@ Histograms of the paramterers according the subject subset they were estimated f
     finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
                                shared_var, 'Shared variance', 'sharedvar', 'R^2')
 
-### [Final plots: plotted histograms (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
+### [Final plots: histograms](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
 
     function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
                                          f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
@@ -376,7 +381,7 @@ Histograms of the paramterers according the subject subset they were estimated f
 
     end
 
-### [Final plots: "home-made R-style" scatterplots (within part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_hmscatter.m)
+### [Final plots: "home-made R-style" scatterplots](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_hmscatter.m)
 
     function finalplots_hmscatter(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file,    ...
                                           f_formatSpec_title, f_toplot, f_strtoplot, f_strtoplot_short, f_ylabel)
@@ -450,7 +455,8 @@ The two parameter shares between 12-13% of variance, whatever the subject subset
 
  
  
-## [Part 2 : Study of the minimal difference discriminated by the fitting procedure](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL(mindiff).mlx)
+## Part 2 : Study of the sensitivy of the fitting procedure
+### [Main script (part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL(mindiff).mlx)
 
 Data loading.
 
@@ -638,7 +644,7 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
 
 
                              
-### [Final plots (within part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
+### [Final plots (part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
 
     function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim, f_param_diff_index, ...
                                  f_param_diffsigni_acrossdiff, f_strparam, f_strparam_short, f_strparam_cte)
