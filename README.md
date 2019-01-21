@@ -1,5 +1,6 @@
 # Development of a model and parameter recovery procedure for the study of reversal learning
 ## Validating project for PCBS course (Cogmaster, 2018-2019).
+[github page](https://tlandron.github.io/PCBS_ModelRecovery/) - [github repository](https://github.com/tlandron/PCBS_ModelRecovery)
 
 The original context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
 
@@ -713,15 +714,18 @@ The model recovery shows that the fitting procedure is reliable.
 The first part focused on the difference between a reference value for each of the two parameters of interest and their recovered values from 10 000 simulations, in four different-sized subsets (12, 24, 48 and 96 subjects). While the fitting procedure slightly overestimates both parameters, such overestimations only represent around 0.005/0.209 = 2% of the mean probability of reversal fixed value across the two tasks and 0.05/1.24 = 4% of the mean choice variability fixed value across the two tasks.
 The second part studied the sensitivity of the fitting procedure to discriminate a difference in the parameters values between the two tasks, in a subset of 24 subjects and confirmed the high-enough fitting procedure sensitivy above 90% for each parameter.
 
-TO DELETE: The "threshold" found for each parameter only represents 0.05/..(difference prev between tasks).. = ... % of the difference in the probability of reversal between the two tasks in the actual data and 0.3/..(difference beta between tasks).. = ... % of the difference in choice variability between the two tasks in the actual data.
-
-
-What this project has brought to me:
-- I started MATLAB language almost from strach, I now have strong bases of it;
-- I have got a first hand-on on the data I'll be using for the long internship during the second semester.
-
 How to improve the recovery procedure:
 - An easy way would be to increase the number of simulations, especially in the second part: more t-tests as well as more differences tested would sharpen the measure of sensitivity.
+
+What this project has brought me:
+- I started MATLAB language almost from scratch, I now have strong bases of it;
+- I have got a first hand-on on the data I'll be using for the long internship during the second semester.
+
+What this course has brought me:
+- This course gave the tools to learn scientific python (class) and MATLAB (project), I now have the resources to build simple experiments (in python) or to conduct simple data analyses (matlab). Using my knowledge from one language to the other will be easier from now on.
+
+How to improve the course:
+- I would suggest to conduct the course as a tutorial, with each session being a subpart of an entire experiment. Each session would focus on different part of the script: stimuli, tasks, data collection, data analysis, and so on.
 
 # License
 All documents in this repository are distributed under the [Creative Commons Attribution-ShareAlike 4](https://creativecommons.org/licenses/by-sa/4.0/). The code is distributed under the [GPL v3 LICENSE](https://www.gnu.org/licenses/gpl-3.0.en.html).
