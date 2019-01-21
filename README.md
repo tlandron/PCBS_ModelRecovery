@@ -14,12 +14,14 @@ Second, the sensitivity of the fitting procedure will be studied by testing diff
 - [Initial fits](#initial-fits)
 - [Part 1: Study of the difference between the recovered values and the reference parameter values](#part-1-study-of-the-difference-between-the-recovered-values-and-the-reference-parameter-values)
     - [Main script (part 1)](#main-script-part-1)
-    - [Final plots: histograms](#final-plots-histograms)
-    - [Final plots: "home-made R-style" scatterplots](#final-plots-home-made-R-style-scatterplots)
+    - [Final plots: histograms script](#final-plots-histograms)
+    - [Final plots: "home-made R-style" scatterplots script](#final-plots-home-made-R-style-scatterplots)
+    - [Conclusion (part 1)](#conclusion-part-1)
 - [Part 2 : Study of the sensitivy of the fitting procedure](#part-2-study-of-the-sensitivity-of-the-fitting-procedure)
     - [Main script (part 2)](#main-script-part-2)
-    - [Final plots (part 2)](#final-plots-part-2)
-- [Conclusion](#conclusion)
+    - [Final plots script (part 2)](#final-plots-part-2)
+    - [Conclusion (part 2)](#conclusion-part-2)
+- [General conclusion](#conclusion)
 - [License](#license)
 
 <!-- markdown-toc end -->
@@ -434,6 +436,7 @@ Histograms of the paramterers according the subject subset they were estimated f
     end
 
 
+### Conclusion (part 1)
 
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
@@ -455,7 +458,7 @@ The two parameter shares between 12-13% of variance, whatever the subject subset
 
  
  
-## Part 2 : Study of the sensitivy of the fitting procedure
+## Part 2 : Study of the sensitivity of the fitting procedure
 ### [Main script (part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL(mindiff).mlx)
 
 Data loading.
@@ -694,6 +697,7 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
         end
     end
 
+### Conclusion (part 2)
 
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_prev_diffsigni_across7diff_24subj_100x30sim.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_beta_diffsigni_across7diff_24subj_100x30sim.png)
@@ -703,7 +707,7 @@ The plots confirm that the fitting procedure false positive rate is around 5% (w
 Such values are the same order as the difference within parameters observed between the two tasks in the actual data (0.2411 - 0.1763 = 0.0648 for prev and 1.3808 - 1.1071 = 0.2737 for beta).
 
 
-## Conclusion
+## General conclusion
 The model recovery shows that the fitting procedure is reliable. 
 The first part focused on the difference between a reference value for each of the two parameters of interest and their recovered values from 10 000 simulations, in four different-sized subsets (12, 24, 48 and 96 subjects). While the fitting procedure slightly overestimates both parameters, such overestimations only represent around 0.005/0.209 = 2% of the mean probability of reversal fixed value across the two tasks and 0.05/1.24 = 4% of the mean choice variability fixed value across the two tasks.
 The second part studied the sensitivity of the fitting procedure to discriminate a difference in the parameters values between the two tasks, in a subset of 24 subjects and confirmed the high-enough fitting procedure sensitivy above 90% for each parameter.
