@@ -14,7 +14,7 @@ Second, the sensitivity of the fitting procedure will be studied by testing diff
 
 - [Given scripts](#given-scripts)
 - [Initial fits](#initial-fits)
-- [Part 1: Study of the difference between the recovered values and the reference parameter values](#part-1-study-of-the-difference-between-the-recovered-values-and-the-reference-parameter-values)
+- [Part 1: Study of the difference between the parameter recovered and reference values](#part-1-study-of-the-difference-between-the-parameter-recovered-and-reference-parameter-values)
     - [Main script (part 1)](#main-script-part-1)
     - [Final plots script (part 1)](#final-plots-script-part-1)
     - [Conclusion (part 1)](#conclusion-part-1)
@@ -90,7 +90,7 @@ A [script to run initial fits](https://github.com/tlandron/PCBS_ModelRecovery/bl
 
 
 
-## Part 1: Study of the difference between the recovered values and the reference values
+## Part 1: Study of the difference between the parameter recovered and reference values
 ### [Main script (part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL.mlx)
 Data loading.
     
