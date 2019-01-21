@@ -1,4 +1,4 @@
-# Development of model and parameter recovery procedures for the study of reversal learning
+# Development of a model and parameter recovery procedure for the study of reversal learning
 ## Validating project for PCBS course (Cogmaster, 2018-2019).
 
 The original context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
