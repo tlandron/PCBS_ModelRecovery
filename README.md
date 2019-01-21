@@ -4,7 +4,7 @@
 
 The original context for this recovery procedure can be in found [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/PCBS_ModelRecovery_Plan_TLANDRON.pdf).
 
-Briefly, the goal of this project is to recover a model and its fitting procedure for a 2-task reversal learning paradigm. First, the recovered parameters of interest (the probability of reversal 'prev' and choice variability 'beta') will be studied across runs of simulations & fits, especially focusing on the mean difference between the recovered parameter and a reference value (obtained with the actual dataset) to reveal any under- or overestimation.
+Briefly, the goal of this project is to recover a model and its fitting procedure for a 2-task reversal learning paradigm. First, the recovered parameters of interest (the probability of reversal 'prev' and choice variability 'beta') will be studied across runs of simulations & fits, especially focusing on the mean difference between the recovered parameter and a reference value (from the actual dataset) to reveal any under- or overestimation.
 Second, the sensitivity of the fitting procedure will be studied by testing different values for each task within parameters.
 
 ---
