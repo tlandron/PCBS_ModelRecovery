@@ -250,7 +250,7 @@ Correlation coefficient between the two parameters between subject is computed f
 Saving workspace. 
 NB: As git only allows files < 25 Mb, the commented code was used to split the variable of interest into two separate files ([prev_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/prev_recov_2x5000sim_12-24-48-96subj.mat) & [beta_variables](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/beta_recov_2x5000sim_12-24-48-96subj.mat)).
     
-    dout = '../Out/' % folder for produced data
+    dout = '../Out/'; % folder for produced data
 
     str_nsubjsubset = ''; % to nicely convert nsubjsubset into a string, e.g., "12-24-48-96"
     for isubjsubset = nsubjsubset
@@ -387,7 +387,7 @@ Data loading.
 
     loaddata
 
-    dout = '../Out/' % folder for produced data
+    dout = '../Out/'; % folder for produced data
     
 Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of the two variables of interest, the probability of reversal and the choice probability.
 
@@ -396,8 +396,8 @@ Inital fits ('nrep' number of fits) of the actual data to obtain an estimate of 
     clear prev_fit beta_fit % to prevent any dimension error when using MATLAB LiveScript environment 
     [prev_fit, beta_fit] = initialfit(nrep, nsubj, dat, subjlist);
 
-    mean(mean(prev_fit, 1),3) % to display prev mean for each task: [0.2411 0.1763]
-    mean(mean(beta_fit, 1),3) % to display beta mean for each task: [1.3808 1.1071]
+    prev_fit_tasks = mean(mean(prev_fit, 1),3) % to display prev mean for each task: [0.2411 0.1763]
+    beta_fit_tasks = mean(mean(beta_fit, 1),3) % to display beta mean for each task: [1.3808 1.1071]
 
     mean_prev_fit = mean(prev_fit(:))
     mean_beta_fit = mean(beta_fit(:))
@@ -543,15 +543,18 @@ Paired-sample t-test + data saving for each given difference (ndiff).
 
 Plot of significant t-tests as a function of the difference in value for each parameter (only works while the value of the other is kept constant).
     
+    prev_diff_tasks = prev_fit_tasks(1)-prev_fit_tasks(2) % computes the each parameter difference between the two tasks in the actual dataset 
+    beta_diff_tasks = beta_fit_tasks(1)-beta_fit_tasks(2)
+
     prevonly_diff_index = [1 2 3 4 5 6 7]    ; % to enter manually according to respective index in 'ndiff'
-    finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 1, prevonly_diff_index,     ...
-                             prev_diffsigni_acrossdiff, 'probability of reversal', 'prev', ...
-                             'choice variability')
+    finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 1, prev_diff_tasks, ...
+                             prevonly_diff_index, prev_diffsigni_acrossdiff,       ...
+                             'probability of reversal', 'prev', 'choice variability')
 
     betaonly_diff_index = [1 8 9 10 11 12 13]; % to enter manually according to respective index in 'ndiff'
-    finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 2, betaonly_diff_index,     ...
-                             beta_diffsigni_acrossdiff, 'choice variability', 'beta',      ...
-                             'probability of reversal')
+    finalplots_mindiff(dout, nsubjsubset, nsim, nttest, ndiff, 2, beta_diff_tasks, ...
+                              betaonly_diff_index, beta_diffsigni_acrossdiff,      ...
+                              'choice variability', 'beta', 'probability of reversal') 
  
 Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/all_diffsigni_across7diff_24subj_100x30sim.mat)).
 
@@ -562,33 +565,38 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
 
     % To save only the variables needed for plotting:
     % name_file = sprintf(formatSpec_file, dout, 'prev', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
-    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim', 'nttest', 'prev_diffsigni_acrossdiff', 'prevonly_diff_index')
+    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim','nttest', 'prev_diff_tasks', ...
+    %                         'prev_diffsigni_acrossdiff', 'prevonly_diff_index')
     % 
     % name_file = sprintf(formatSpec_file, dout, 'beta', length(prevonly_diff_index), str_nsubjsubset, nttest, nsim, '.mat');
-    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim', 'nttest', 'beta_diffsigni_acrossdiff', 'betaonly_diff_index')
+    % save(name_file, 'dout', 'nsubjsubset', 'nttest', 'ndiff', 'nsim','nttest', 'beta_diff_tasks', ...
+    %                         'beta_diffsigni_acrossdiff', 'betaonly_diff_index')
 
 
                              
 ### [Final plots script (part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_mindiff.m)
 
-    function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim, f_param_diff_index, ...
-                                 f_param_diffsigni_acrossdiff, f_strparam, f_strparam_short, f_strparam_cte)
-    % Plot the number of significant ttests according to the difference tested
-    % Input:  'f_dout'                        folder for data (dout)
-    %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
-    %         'f_nsim'                        number of simulations (nsim)
-    %         'f_nttest'                      number of ttests (nttest)
-    %         'f_ndiff'                       differences to be tested (ndiff)
-    %         'f_ndiffdim'                    1 for prev, 2 for beta
-    %         'f_param_diff_index'            index of the revelant difference for each ...
-    %                                         parameter (prev/beta_diff_index)
-    %         'f_param_diffsigni_acrossdiff'  results of ttests for the two parameters for all ...
-    %                                         differences to be tested (prev/beta_diffsigni_acrossdiff)
-    %         'f_strparam'                    full name of the parameter ...
-    %                                         ('probability of reversal' or 'choice variability')        
-    %         'f_strparam_short'              shortened name of the parameter ('prev' or 'beta')
-    %         'f_strparam_cte'                constant parameter ('beta' or 'prev')
-    % Output: two figures saved (one for each parameter)
+    function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f_ndiffdim,      ...
+                                 f_diffparam_fit, f_param_diff_index, f_param_diffsigni_acrossdiff, ... 
+                                 f_strparam, f_strparam_short, f_strparam_cte)
+        % Plot the number of significant ttests according to the difference tested
+        % Input:  'f_dout'                        folder for data (dout)
+        %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
+        %         'f_nsim'                        number of simulations (nsim)
+        %         'f_nttest'                      number of ttests (nttest)
+        %         'f_ndiff'                       differences to be tested (ndiff)
+        %         'f_ndiffdim'                    1 for prev, 2 for beta
+        %         'f_diffparam_fit'               difference between the twotasks in the actual dataset ...
+        %                                         (prev/beta_diff_tasks)
+        %         'f_param_diff_index'            index of the revelant difference for each ...
+        %                                         parameter (prev/beta_diff_index)
+        %         'f_param_diffsigni_acrossdiff'  results of ttests for the two parameters for all ...
+        %                                         differences to be tested (prev/beta_diffsigni_acrossdiff)
+        %         'f_strparam'                    full name of the parameter ...
+        %                                         ('probability of reversal' or 'choice variability')        
+        %         'f_strparam_short'              shortened name of the parameter ('prev' or 'beta')
+        %         'f_strparam_cte'                constant parameter ('beta' or 'prev')
+        % Output: two figures saved (one for each parameter)
 
         f_formatSpec_title = ['Significant t-tests as a function of the difference tested for %s ', 10, ...
                             '(%s constant, for %d t-tests on %d sim each, %d subjects)']; % ',10,' for new line
@@ -610,14 +618,22 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
             name_title = sprintf(f_formatSpec_title, f_strparam, f_strparam_cte, f_nttest, f_nsim, f_nsubjsubset(revindexsubset));
             title(name_title);
             plot(x, y, 'o-', 'LineWidth', 2)
+
+            xcst = [f_diffparam_fit f_diffparam_fit]; % to draw a vertical line for the difference between the two tasks in the actual dataset
+            ylimline = get(gca,'ylim');               % also works with xline function in MATLAB 2018
+            line(xcst, ylimline, 'Color','red','LineStyle','--');
+
             ylabel('Percentage of significant t-tests');
             xlabel('Difference tested')
             hold off
 
-            name_fig = sprintf(f_formatSpec_fig, f_dout, f_strparam_short, length(f_param_diff_index), f_nsubjsubset(revindexsubset), f_nttest, f_nsim, '.png');
+            name_fig = sprintf(f_formatSpec_fig, f_dout, f_strparam_short, length(f_param_diff_index), ...
+                               f_nsubjsubset(revindexsubset), f_nttest, f_nsim,'.png');
             saveas(h, name_fig);   
         end
     end
+
+
 
 ### Conclusion (part 2)
 
