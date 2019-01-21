@@ -14,11 +14,11 @@ Second, the sensitivity of the fitting procedure will be studied by testing diff
 
 - [Given scripts](#given-scripts)
 - [Initial fits](#initial-fits)
-- [Part 1: Study of the difference between the parameter recovered and reference values](#part-1-study-of-the-difference-between-the-parameter-recovered-and-reference-parameter-values)
+- Part 1: Study of the difference between the parameter recovered and reference values
     - [Main script (part 1)](#main-script-part-1)
     - [Final plots script (part 1)](#final-plots-script-part-1)
     - [Conclusion (part 1)](#conclusion-part-1)
-- [Part 2 : Study of the sensitivity of the fitting procedure](#part-2-study-of-the-sensitivity-of-the-fitting-procedure)
+- Part 2 : Study of the sensitivity of the fitting procedure
     - [Main script (part 2)](#main-script-part-2)
     - [Final plots script (part 2)](#final-plots-script-part-2)
     - [Conclusion (part 2)](#conclusion-part-2)
