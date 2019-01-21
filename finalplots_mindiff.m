@@ -44,7 +44,8 @@ function finalplots_mindiff (f_dout, f_nsubjsubset, f_nsim, f_nttest, f_ndiff, f
         xcst = [f_diffparam_fit f_diffparam_fit]; % to draw a vertical line for the difference between the two tasks in the actual dataset
         ylimline = get(gca,'ylim');               % also works with xline function in MATLAB 2018
         line(xcst, ylimline, 'Color','red','LineStyle','--');
-                
+        
+        set(gca, 'XGrid', 'on', 'YGrid', 'off')
         ylabel('Percentage of significant t-tests');
         xlabel('Difference tested')
         hold off
