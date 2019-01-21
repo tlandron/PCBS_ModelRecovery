@@ -16,8 +16,7 @@ Second, the sensitivity of the fitting procedure will be studied by testing diff
 - [Initial fits](#initial-fits)
 - [Part 1: Study of the difference between the recovered values and the reference parameter values](#part-1-study-of-the-difference-between-the-recovered-values-and-the-reference-parameter-values)
     - [Main script (part 1)](#main-script-part-1)
-    - [Final plots: histograms script](#final-plots-histograms-script)
-    - [Final plots: "home-made R-style" scatterplots script](#final-plots-home-made-R-style-scatterplots-script)
+    - [Final plots script (part 1)](#final-plots-script-part-1)
     - [Conclusion (part 1)](#conclusion-part-1)
 - [Part 2 : Study of the sensitivity of the fitting procedure](#part-2-study-of-the-sensitivity-of-the-fitting-procedure)
     - [Main script (part 2)](#main-script-part-2)
@@ -284,25 +283,7 @@ Histograms of the paramterers according the subject subset they were estimated f
     finalplots_variance(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, ...
                               nbins, beta_diff_subjave, 'choice variability', 'beta')
                       
-"Homemade R-style" scatterplots displaying the mean and the variance for each subset, for each parameter.
-
-    f_formatSpec_title = 'Mean %s (2x%d simulations)';
-    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
-                               meansd_prev_diff_subjave(:, 1), 'probability of reversal', 'mean_prev', 'Probability of reversal')
-
-    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
-                               meansd_beta_diff_subjave(:, 1), 'choice variability', 'mean_beta', 'Choice variability')
-                          
-"Homemade R-style" scatterplots displaying the correlation coeffcient or the shared variance between prev and beta for each subset.
-
-    f_formatSpec_title = '%s between the probability of reversal and choice variability (2x%d simulations)';
-    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
-                               mean_corr_prev_beta, 'Correlation coefficients', 'corr', 'r')
-
-    finalplots_corrshvar(dout, nsubjsubset, nsim, str_nsubjsubset, formatSpec_file, f_formatSpec_title, ...
-                               shared_var, 'Shared variance', 'sharedvar', 'R^2')
-
-### [Final plots: histograms script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
+### [Final plots script (part 1)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_variance.m)
 
     function finalplots_variance(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file, ...
                                          f_nbins, f_param_diff_subjave, f_strparam, f_strparam_short)
@@ -385,59 +366,6 @@ Histograms of the paramterers according the subject subset they were estimated f
 
     end
 
-### [Final plots: "home-made R-style" scatterplots script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/finalplots_hmscatter.m)
-
-    function finalplots_hmscatter(f_dout, f_nsubjsubset, f_nsim, f_str_nsubjsubset, f_formatSpec_file,    ...
-                                          f_formatSpec_title, f_toplot, f_strtoplot, f_strtoplot_short, f_ylabel)
-        % Plot the an scatterplot of f_toplot (mean probability of reversal/mean choice variability or    ...
-        %      correlation coefficients or shared variance values between probability of reversal and     ...
-        %      choice variability) for each subject subset.
-        % Input:  'f_dout'                        folder for data (dout)
-        %         'f_nsubjsubset'                 subsets of participant (nsubjsubset)
-        %         'f_nsim'                        number of simulations (nsim)
-        %         'f_str_nsubjsubset'             string version of nsubjsubset (str_nsubjsubset)
-        %         'f_formatSpec_file'             saved figure string format (formatSpec_file)
-        %         'f_formatSpec_title'            title string format (formatSpec_title)
-        %         'f_toplot'                      variable to be plotted (e.g., corr or sharedvar)
-        %         'f_strtoplot'                   string full name of the variable to be plotted ...
-        %                                         (e.g., 'Correlation coefficients' or 'Shared variance')
-        %         'f_strtoplot_short'             string short name of the variable to be plotted ...
-        %                                         (e.g., 'corr' or 'sharedvar')     
-        %         'f_ylabel'                      y label (e.g, math name for corr: 'r', sharedvar: 'R^2')
-        % Output: one figure saved (for either prev or beta)
-
-        lgd = cell(length(f_nsubjsubset), 1); % to create an 'automatic' legend corresponding with each subset
-        for irevindexsubset = 1:length(f_nsubjsubset)
-           lgd{irevindexsubset} = sprintf('%d subjects', f_nsubjsubset(irevindexsubset));
-        end
-
-
-        h = figure;
-        hold on;
-        title(sprintf(f_formatSpec_title, f_strtoplot, f_nsim))
-
-        for i = 1:length(f_toplot)
-            scatter(0,f_toplot(i))
-        end
-
-        m = mean(f_toplot);
-        hline = refline([0 m]);
-        hline.Color = 'r';
-
-        ax1 = gca;                   % to get current axes
-        ax1.YAxis.Visible = 'on' ;   % to keep y-axis
-        ax1.XAxis.Visible = 'off';   % to remove x-axis
-        ylabel(f_ylabel);
-        legend(lgd)
-        hold off
-
-
-        name_fig = sprintf(f_formatSpec_file, f_dout, ['fig_',f_strtoplot_short], ...
-                                              f_nsim, f_str_nsubjsubset, '.png');
-        saveas(h, name_fig)
-    end
-
-
 ### Conclusion (part 1)
 
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
@@ -446,19 +374,11 @@ Histograms of the paramterers according the subject subset they were estimated f
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
 ![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
 
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_mean_prev_2x5000sim_12-24-48-96subj.png)
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_mean_beta_2x5000sim_12-24-48-96subj.png)
+The plots shows a slight surestimation of the recovered values (e.g., around +0.0050 for the probability of reversal and around +0.0526 for choice variability, both for 24 subjects -- can also be extracted from 'meansd_prev_diff_subjave' and 'meansd_beta_diff_subjave'). Unsurprisingly, the more subjects, the smaller the variance. 
+
+From 'shared_var', the shared variance between the two parameter is extracted to suggest 12-13% of shared variance, whatever the subject subset size. 
 
 
-The plots shows a slight surestimation of the recovered values (e.g., around +0.0050  for the probability of reversal and around +0.0526 for choice variability, both for 24 subjects). Unsurprisingly, the more subjects, the smaller the variance. 
-
-
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_corr_2x5000sim_12-24-48-96subj.png)
-![alt text](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fig_sharedvar_2x5000sim_12-24-48-96subj.png)
-
-The two parameter shares between 12-13% of variance, whatever the subject subset size. 
-
- 
  
 ## Part 2 : Study of the sensitivity of the fitting procedure
 ### [Main script (part 2)](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/script_recovery_ACTOBS_GTS_TL(mindiff).mlx)
@@ -722,7 +642,7 @@ What this project has brought me:
 - I have got a first hand-on on the data I'll be using for the long internship during the second semester.
 
 What this course has brought me:
-- This course gave the tools to learn scientific python (class) and MATLAB (project), I now have the resources to build simple experiments (in python) or to conduct simple data analyses (matlab). Using my knowledge from one language to the other will be easier from now on.
+- This course gave the tools to learn scientific python (class) and MATLAB (project), I now have the resources to build simple experiments (in python) or to conduct simple data analyses (MATLAB). Using my knowledge from one language to the other will be easier from now on.
 
 How to improve the course:
 - I would suggest to conduct the course as a tutorial, with each session being a subpart of an entire experiment. Each session would focus on different part of the script: stimuli, tasks, data collection, data analysis, and so on.
