@@ -1,9 +1,7 @@
 %% Load data (given script)
 
-%  This cell performs simple analyses: the reversal curves and the repetition
-%  curves, for each subject and condition. It also creates a massive data array
-%  storing the data of all subjects and conditions, such that empirical group-
-%  wise priors for model parameters (next cell) can be easily computed.
+%  This cell creates a massive data array storing 
+%  the data of all subjects and conditions.
 
 % clear MATLAB workspace
 clear all
