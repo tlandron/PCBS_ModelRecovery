@@ -32,8 +32,7 @@ Second, the sensitivity of the fitting procedure will be studied by testing diff
 
 ## Given scripts
 - to load the data [loading script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/loaddata.m):
-    - computes the reversal curves and the repetition  curves, for each subject and condition,
-    - also creates a massive data array 'dat' storing the data of all subjects and conditions;
+    - creates a massive data array 'dat' storing the data of all subjects and conditions;
 - simulation procedure [simulation script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/sim_model_softmax.m):
     - produces simulated datasets from actual data, stores them in data array (cfg);
 - fit procedure [fit script](https://github.com/tlandron/PCBS_ModelRecovery/blob/master/fit_model_softmax.m):
