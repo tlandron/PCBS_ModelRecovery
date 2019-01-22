@@ -657,8 +657,7 @@ How to improve the recovery procedure:
 - An easy way would be to increase the number of simulations, especially in the second part: more t-tests as well as more differences tested would sharpen the measure of sensitivity.
 
 What this project has brought me:
-- I started MATLAB language almost from scratch, I now have strong bases of it;
-- I have got a first hand-on on the data I'll be using for the long internship during the second semester.
+- I started MATLAB language almost from scratch, I now have strong bases of it (e.g., MATLAB environment, 'MATLAB' mindset - quite different from python, the figures, etc.).
 
 What this course has brought me:
 - This course gave the tools to learn scientific python (class) and MATLAB (project), I now have the resources to build simple experiments (in python) or to conduct simple data analyses (MATLAB). Using my knowledge from one language to the other will be easier from now on.
