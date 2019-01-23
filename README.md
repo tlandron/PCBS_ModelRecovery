@@ -7,6 +7,10 @@ The original context for this recovery procedure can be in found [here](https://
 Briefly, the goal of this project is to recover a model and its fitting procedure for a 2-task reversal learning paradigm. First, the recovered parameters of interest (the probability of reversal 'prev' and choice variability 'beta') will be studied across runs of simulations & fits, especially focusing on the mean difference between the recovered parameter and a reference value (from the actual dataset) to reveal any under- or overestimation.
 Second, the sensitivity of the fitting procedure will be studied by testing different values for each task within parameters.
 
+
+CAUTION: the web version of git was used almost until the very end of this project, resulting in all the files being uploaded in the main directory. However, for the scripts to run correctly, the initial folder organisation has to be respected (as well as having the data). The whole 'PBCS_ModelRecovery' was therefore commited and pushed using the terminal, the 'initially commited files' (i.e., those initially commited in the main directory) were nevertheless kept in the main directory so as to keep their commit history -- as asked -- the (script and figure) links in the following document refer to those 'initially commited files'. 
+__**/!\**__ To test the scripts, clone the whole repository and run the PCBS_ModelRecovery/**Code/**..'script'.mlx (not the PCBS_ModelRecovery/..'script'.mlx)
+
 ---
 
 <!-- markdown-toc start - Don't edit this section. Run M-x markdown-toc-refresh-toc -->
