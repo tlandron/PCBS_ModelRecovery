@@ -374,11 +374,9 @@ Histograms of the paramterers according the subset they were estimated from (in 
 
 ### Conclusion (part 1)
 
-<img src="./fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="500">
-<img src="./fig_pdf_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="500">
+<img src="./fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="500"> <img src="./fig_pdf_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="500">
 
-<img src="./fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="500">
-<img src=".//fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="500">
+<img src="./fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="500"> <img src=".//fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="500">
 
 The plots show a slight surestimation in the recovered values (e.g., around +0.0050 for the probability of reversal and around +0.0526 for choice variability, both for 24 subjects -- can be extracted from 'meansd_prev_diff_subjave' and 'meansd_beta_diff_subjave'). Unsurprisingly, the more subjects, the smaller the variance. 
 
@@ -645,8 +643,7 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
 
 ### Conclusion (part 2)
 
-<img src="./fig_prev_diffsigni_across7diff_24subj_100x30sim.png" width="500">
-<img src="./fig_beta_diffsigni_across7diff_24subj_100x30sim.png" width="500">
+<img src="./fig_prev_diffsigni_across7diff_24subj_100x30sim.png" width="500"> <img src="./fig_beta_diffsigni_across7diff_24subj_100x30sim.png" width="500">
 
 Arbitrarily, a subset of 24 subjects was considered in the second part.
 The plots confirm that the fitting procedure false positive rate is around 5% (when there is no difference between the simulated parameter and the fitted one) and suggest that the fitting procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (close to 100%). 
