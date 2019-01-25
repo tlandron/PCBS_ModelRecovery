@@ -12,7 +12,7 @@ CAUTION: the web version of git was used almost until the very end of this proje
 
 /!\ To test the scripts, clone the whole repository and run the PCBS_ModelRecovery/**Code/**..'script'.mlx (not the PCBS_ModelRecovery/..'script'.mlx)
 
-Also, due to figure issues, reading README.md from the gitrepository is strongly advised.
+Also, due to figure issues, reading README.md from the git repository is strongly advised.
 
 ---
 
