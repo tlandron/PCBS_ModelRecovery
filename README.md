@@ -374,9 +374,9 @@ Histograms of the paramterers according the subset they were estimated from (in 
 
 ### Conclusion (part 1)
 
-<img src="./fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="429"> <img src="./fig_pdf_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="429">
+<img src="./fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="429"> <img src="./fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="429">
 
-<img src="./fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="429"> <img src=".//fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="429">
+<img src="./fig_pdf_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png" width="429"> <img src=".//fig_pdf_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png" width="429">
 
 The plots show a slight surestimation in the recovered values (e.g., around +0.0050 for the probability of reversal and around +0.0526 for choice variability, both for 24 subjects -- can be extracted from 'meansd_prev_diff_subjave' and 'meansd_beta_diff_subjave'). Unsurprisingly, the more subjects, the smaller the variance. 
 
