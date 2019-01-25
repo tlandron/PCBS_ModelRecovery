@@ -374,7 +374,7 @@ Histograms of the paramterers according the subset they were estimated from (in 
 
 ### Conclusion (part 1)
 
-![](/fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
+![](./fig_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
 ![](/fig_pdf_diff_prev_recov-fix_2x5000sim_12-24-48-96subj.png)
 
 ![](/fig_diff_beta_recov-fix_2x5000sim_12-24-48-96subj.png)
