@@ -643,7 +643,7 @@ Final workscape saving (e.g., [here](https://github.com/tlandron/PCBS_ModelRecov
 
 ### Conclusion (part 2)
 
-<img src="./fig_prev_diffsigni_across7diff_24subj_100x30sim.png" width="500"> <img src="./fig_beta_diffsigni_across7diff_24subj_100x30sim.png" width="500">
+<img src="./fig_prev_diffsigni_across7diff_24subj_100x30sim.png" width="400"> <img src="./fig_beta_diffsigni_across7diff_24subj_100x30sim.png" width="400">
 
 Arbitrarily, a subset of 24 subjects was considered in the second part.
 The plots confirm that the fitting procedure false positive rate is around 5% (when there is no difference between the simulated parameter and the fitted one) and suggest that the fitting procedure is able to acknowledge a difference of 0.05 in the probablity of reversal up to more than 90%, and a difference of 0.3 in the choice variability (close to 100%). 
